@@ -530,7 +530,7 @@ export default function MerchMagicWebsite() {
             <textarea
               name="message"
               placeholder="Tell us about your project"
-              rows="5"
+              rows={5}
               className="bg-black/40 border border-white/10 rounded-2xl px-5 py-4 outline-none focus:border-purple-500 md:col-span-2"
             ></textarea>
 
