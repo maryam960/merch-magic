@@ -462,6 +462,50 @@
     .faq-item.open .faq-answer { max-height: 300px; padding-bottom: 24px; }
     .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--accent); border-color: var(--accent); color: var(--bg); }
 
+    /* ── ETSY SECTION ──────────────────────────── */
+    .etsy-section {
+      padding: 100px 40px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .etsy-inner {
+      max-width: 720px;
+    }
+    .etsy-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #fff8f5; border: 1px solid rgba(241,100,30,0.2);
+      border-radius: 100px; padding: 8px 18px;
+      margin-bottom: 28px;
+    }
+    .etsy-badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #F1641E; flex-shrink: 0;
+    }
+    .etsy-badge span {
+      font-size: .75rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: #c94c0c;
+    }
+    .etsy-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .etsy-title em { font-style: normal; color: #F1641E; }
+    .etsy-desc {
+      font-size: 1.05rem; line-height: 1.75; color: var(--text-muted);
+      margin-bottom: 36px; max-width: 620px;
+    }
+    .btn-etsy {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 1rem; font-weight: 600; color: #fff;
+      text-decoration: none; padding: 14px 28px;
+      background: #F1641E; border-radius: 100px;
+      transition: opacity .2s, transform .2s;
+    }
+    .btn-etsy:hover { opacity: .9; transform: translateY(-2px); }
+
     /* ── CTA SECTION ──────────────────────────── */
     .cta-section {
       padding: 120px 40px; text-align: center;
@@ -580,10 +624,11 @@
 <nav>
   <a href="#" class="nav-logo">Merch<span>Magic</span></a>
   <ul class="nav-links">
-    <li><a href="#products">Products</a></li>
+    <li><a href="products.html">Products</a></li>
     <li><a href="#how">How It Works</a></li>
     <li><a href="#reviews">Reviews</a></li>
     <li><a href="#faq">FAQ</a></li>
+    <li><a href="#etsy" style="color:#F1641E;font-weight:600;">Etsy Shop</a></li>
   </ul>
   <div class="nav-actions">
     <a href="https://instagram.com/merchmagicuk" target="_blank" class="btn-ghost">Instagram</a>
@@ -608,7 +653,7 @@
     </p>
     <div class="hero-ctas">
       <a href="https://wa.me/447892734800" target="_blank" class="btn-large">Start Your Order →</a>
-      <a href="#products" class="btn-outline-large">See What We Make</a>
+      <a href="products.html" class="btn-outline-large">See What We Make</a>
     </div>
     <div class="hero-meta">
       <div class="hero-meta-item">
@@ -714,7 +759,7 @@
       </div>
       <div class="product-card-footer">
         <div class="product-from">From <strong>£8</strong> / unit</div>
-        <a href="#contact" class="product-arrow">→</a>
+        <a href="products.html" class="product-arrow">→</a>
       </div>
     </div>
 
@@ -729,7 +774,7 @@
       </div>
       <div class="product-card-footer">
         <div class="product-from">From <strong>£18</strong> / unit</div>
-        <a href="#contact" class="product-arrow">→</a>
+        <a href="products.html" class="product-arrow">→</a>
       </div>
     </div>
 
@@ -744,7 +789,7 @@
       </div>
       <div class="product-card-footer">
         <div class="product-from">From <strong>£10</strong> / unit</div>
-        <a href="#contact" class="product-arrow">→</a>
+        <a href="products.html" class="product-arrow">→</a>
       </div>
     </div>
 
@@ -759,7 +804,7 @@
       </div>
       <div class="product-card-footer">
         <div class="product-from">From <strong>£5</strong> / unit</div>
-        <a href="#contact" class="product-arrow">→</a>
+        <a href="products.html" class="product-arrow">→</a>
       </div>
     </div>
 
@@ -774,7 +819,7 @@
       </div>
       <div class="product-card-footer">
         <div class="product-from">From <strong>£3</strong> / unit</div>
-        <a href="#contact" class="product-arrow">→</a>
+        <a href="products.html" class="product-arrow">→</a>
       </div>
     </div>
 
@@ -789,7 +834,7 @@
       </div>
       <div class="product-card-footer">
         <div class="product-from">From <strong>£6</strong> / unit</div>
-        <a href="#contact" class="product-arrow">→</a>
+        <a href="products.html" class="product-arrow">→</a>
       </div>
     </div>
 
@@ -940,6 +985,23 @@
   </div>
 </section>
 
+<!-- ETSY -->
+<section class="etsy-section" id="etsy">
+  <div class="etsy-inner">
+    <div class="etsy-badge">
+      <span class="etsy-badge-dot"></span>
+      <span>Now on Etsy</span>
+    </div>
+    <h2 class="etsy-title">Browse our shop<br>on <em>Etsy</em>.</h2>
+    <p class="etsy-desc">
+      You can find our full range of custom merch on our Etsy store — browse bestsellers, check verified reviews from real customers across the UK, and place your order with secure checkout. It's the easiest way to get started if you already know what you want.
+    </p>
+    <a href="https://www.etsy.com/shop/MerchMagicUK" target="_blank" class="btn-etsy">
+      Visit Our Etsy Shop →
+    </a>
+  </div>
+</section>
+
 <!-- CTA -->
 <section class="cta-section" id="contact">
   <h2 class="cta-title">Ready to make <em>magic</em>?</h2>
@@ -958,6 +1020,7 @@
       <p>Premium custom branded merchandise for brands, events, and businesses across the UK. No minimums. Fast turnaround. Always quality.</p>
       <div class="footer-social">
         <a href="https://instagram.com/merchmagicuk" target="_blank" class="social-btn" title="Instagram">📸</a>
+        <a href="https://www.etsy.com/shop/MerchMagicUK" target="_blank" class="social-btn" title="Etsy">🛍️</a>
         <a href="mailto:maryam@merchmagic.uk" class="social-btn" title="Email">✉️</a>
         <a href="https://www.merchmagic.uk" class="social-btn" title="Website">🌐</a>
       </div>
