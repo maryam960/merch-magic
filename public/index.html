@@ -171,11 +171,14 @@
     }
     .btn-outline-large:hover { border-color: rgba(240,236,232,0.4); }
     .hero-meta {
-      margin-top: 60px; display: flex; gap: 32px; flex-wrap: wrap;
+      margin-top: 60px; display: flex; flex-direction: column; gap: 10px;
     }
     .hero-meta-item {
-      display: flex; align-items: center; gap: 8px;
-      font-size: .8rem; color: var(--text-muted);
+      display: flex; align-items: center; gap: 10px;
+      font-size: .95rem; color: var(--text-muted); line-height: 1;
+    }
+    .hero-meta-item > div {
+      flex-shrink: 0; display: flex; align-items: center; justify-content: center;
     }
     .hero-meta-icon {
       width: 28px; height: 28px; border-radius: 8px;
@@ -384,38 +387,46 @@
     .product-card:hover .product-arrow { background: var(--accent); color: var(--bg); border-color: var(--accent); }
 
     /* ── HOW IT WORKS ──────────────────────────── */
-    .how-section { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .how-section { background: #f8f7ff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; }
+    .how-label { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .how-label::before, .how-label::after { content: '✦'; margin: 0 8px; }
+    .how-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--text); margin: 0 0 8px; }
+    .how-title span { color: var(--accent); }
+    .how-underline { width: 80px; height: 3px; background: var(--accent); border-radius: 2px; margin: 0 auto 56px; }
     .steps-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 32px; margin-top: 60px;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 0; margin-top: 0; align-items: start;
     }
+    .steps-wrapper { display: flex; align-items: flex-start; gap: 0; justify-content: center; }
     .step-card {
-      padding: 32px; border: 1px solid var(--border);
-      border-radius: 20px; background: var(--bg);
-      position: relative;
+      padding: 28px 20px 28px; border: 1.5px solid #e8e4f8;
+      border-radius: 20px; background: #fff;
+      position: relative; text-align: center; flex: 1; max-width: 240px;
+      box-shadow: 0 2px 12px rgba(91,33,182,0.06);
     }
-    .step-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 3.5rem; font-weight: 800;
-      color: rgba(240,236,232,0.06); line-height: 1;
-      margin-bottom: 20px; letter-spacing: -0.05em;
-    }
-    .step-icon {
-      width: 48px; height: 48px; border-radius: 14px;
+    .step-badge {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--accent); color: #fff;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1rem;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.4rem; margin-bottom: 20px;
-      background: var(--accent-pale);
+      position: absolute; top: -18px; left: 50%; transform: translateX(-50%);
+      box-shadow: 0 4px 12px rgba(91,33,182,0.3);
     }
+    .step-illustration {
+      width: 100px; height: 100px; border-radius: 50%;
+      background: #ede9fe; margin: 20px auto 18px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .step-illustration img { width: 100%; height: 100%; object-fit: cover; }
     .step-card h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.2rem; font-weight: 800; margin-bottom: 12px;
+      font-size: 1rem; font-weight: 800; margin-bottom: 10px; color: var(--text);
     }
-    .step-card p { font-size: .9rem; color: var(--text-muted); line-height: 1.65; }
-    .step-connector {
-      position: absolute; right: -16px; top: 50%;
-      transform: translateY(-50%); z-index: 1;
-      font-size: 1.2rem; color: var(--text-muted);
-      display: none;
+    .step-card p { font-size: .82rem; color: var(--text-muted); line-height: 1.6; margin: 0; }
+    .step-arrow {
+      font-size: 1.6rem; color: var(--accent); flex-shrink: 0;
+      align-self: center; padding: 0 8px; margin-top: -10px;
     }
 
     /* ── STATS ──────────────────────────────────── */
@@ -477,9 +488,42 @@
     .review-info h4 { font-size: .9rem; font-weight: 600; margin-bottom: 2px; }
     .review-info p { font-size: .8rem; color: var(--text-muted); }
 
-    /* ── FAQ ──────────────────────────────────── */
+    /* ── FAQ + FOUNDERS ───────────────────────── */
     .faq-section { background: var(--bg2); border-top: 1px solid var(--border); }
-    .faq-wrap { max-width: 760px; margin-top: 60px; }
+    .faq-founders-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; align-items: stretch;
+    }
+    .faq-col { padding: 80px 40px 80px 80px; }
+    .founders-col {
+      padding: 80px 80px 80px 40px;
+      border-left: 1px solid var(--border);
+    }
+    .faq-wrap { margin-top: 48px; }
+    .founders-cards { display: flex; flex-direction: column; gap: 24px; margin-top: 48px; }
+    .founder-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 20px; padding: 28px; display: flex; gap: 20px; align-items: flex-start;
+    }
+    .founder-avatar {
+      width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+      background: var(--accent-pale); overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .founder-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .founder-avatar-initials {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.4rem; font-weight: 800;
+      color: var(--accent);
+    }
+    .founder-info h3 {
+      font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 800;
+      margin-bottom: 4px; color: var(--text);
+    }
+    .founder-role {
+      font-size: .78rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 10px;
+    }
+    .founder-bio { font-size: .88rem; color: var(--text-muted); line-height: 1.7; }
     .faq-item {
       border-bottom: 1px solid var(--border);
     }
@@ -712,6 +756,10 @@
         <div class="feature-chip chip-gold" style="width:28px;height:28px;border-radius:8px;font-size:.85rem">★</div>
         UK-based & quality guaranteed
       </div>
+      <div class="hero-meta-item">
+        <div class="feature-chip chip-lime" style="width:28px;height:28px;border-radius:8px;font-size:.85rem">✓</div>
+        Dedicated Account Manager
+      </div>
     </div>
   </div>
   <!-- HERO IMAGE → save your file as hero.jpg in the Website folder -->
@@ -745,10 +793,6 @@
 
 
 
-<!-- WHY MERCH MAGIC -->
-<section class="why-section" id="why">
-  <img src="why-section.png" alt="Why Merch Magic" style="width:100%;height:auto;display:block;border-radius:20px;">
-</section>
 
 <!-- PRODUCTS GRID -->
 <section id="products" style="padding: 100px 40px;">
@@ -852,27 +896,36 @@
 
 <!-- HOW IT WORKS -->
 <section class="how-section" id="how">
-  <div class="section-label">How It Works</div>
-  <h2 class="section-title">Your merch in 3 simple steps.</h2>
-  <p class="section-subtitle">We've made ordering custom merch as painless as possible. From brief to delivery, we handle everything.</p>
-  <div class="steps-grid">
+  <div class="how-label">Our Merch</div>
+  <h2 class="how-title">In <span>4</span> Simple Steps</h2>
+  <div class="how-underline"></div>
+  <div class="steps-wrapper">
     <div class="step-card">
-      <div class="step-number">01</div>
-      <div class="step-icon chip-lime">📋</div>
-      <h3>Tell Us What You Need</h3>
-      <p>Fill in our quick quote form — products, quantities, colours, and your artwork (or a rough idea). No lengthy briefs required.</p>
+      <div class="step-badge">1</div>
+      <div class="step-illustration"><img src="step1.png" alt="Tell us what you want"></div>
+      <h3>You tell us what you want</h3>
+      <p>Share your idea, design, colours and any instructions.</p>
     </div>
+    <div class="step-arrow">→</div>
     <div class="step-card">
-      <div class="step-number">02</div>
-      <div class="step-icon chip-sky">🎨</div>
-      <h3>Approve Your Designs</h3>
-      <p>We send you a digital mockup within 24 hours. Tweak it, approve it, and we move to production. Revisions included, no extra cost.</p>
+      <div class="step-badge">2</div>
+      <div class="step-illustration"><img src="step2.png" alt="Digital mockups"></div>
+      <h3>We send you free digital mockups</h3>
+      <p>We create and send you digital mockups as per your instructions.</p>
     </div>
+    <div class="step-arrow">→</div>
     <div class="step-card">
-      <div class="step-number">03</div>
-      <div class="step-icon chip-lime">🚀</div>
-      <h3>Receive & Impress</h3>
-      <p>Your merch is printed, quality-checked, and delivered direct to your door in 5–7 business days. Open the box. Be impressed.</p>
+      <div class="step-badge">3</div>
+      <div class="step-illustration"><img src="step3.png" alt="Confirm order"></div>
+      <h3>You confirm and place the order</h3>
+      <p>You're happy with the mockup? Confirm and place your order.</p>
+    </div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="step-badge">4</div>
+      <div class="step-illustration"><img src="step4.png" alt="Ship to you"></div>
+      <h3>We fulfill it and ship it to you</h3>
+      <p>We produce, quality check, pack and ship it to your door.</p>
     </div>
   </div>
 </section>
@@ -944,52 +997,82 @@
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- FAQ + FOUNDERS -->
 <section class="faq-section" id="faq">
-  <div class="section-label">FAQ</div>
-  <h2 class="section-title">Questions you probably have.</h2>
-  <div class="faq-wrap">
-    <div class="faq-item open">
-      <div class="faq-question" onclick="toggleFaq(this)">
-        Is there really no minimum order?
-        <span class="faq-icon">+</span>
+  <div class="faq-founders-grid">
+    <div class="faq-col">
+      <div class="section-label">FAQ</div>
+      <h2 class="section-title">Questions you probably have.</h2>
+      <div class="faq-wrap">
+        <div class="faq-item open">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Is there really no minimum order?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Yes, genuinely. You can order as few as 1 item. There's no minimum on any of our products. Pricing per unit does decrease with volume, but we'll never turn away a small order.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            What file formats do you need for artwork?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Ideally a vector file (AI, EPS, SVG, or PDF) for the sharpest results. But don't worry if you don't have one — send us whatever you have and our design team will prep it for print at no extra cost.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            How long does delivery take?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Standard turnaround is 5–7 business days from artwork approval. Rush orders (2–4 days) are available for most products — just mention this when you get in touch and we'll confirm availability.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Can I see a sample before placing a large order?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">Absolutely. We recommend this for large orders. You can order a small batch or a single sample first. We can also send a blank product sample (at cost) so you can check the fabric and fit before committing to a print run.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            What printing methods do you offer?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">We offer screen printing, DTG (direct to garment), embroidery, vinyl heat transfer, and sublimation printing. We'll recommend the best method for your design and quantity when you get in touch.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question" onclick="toggleFaq(this)">
+            Do you ship outside the UK?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-answer">We're primarily UK-based but can arrange international shipping for larger orders. Get in touch and we'll work out the best option for you.</div>
+        </div>
       </div>
-      <div class="faq-answer">Yes, genuinely. You can order as few as 1 item. There's no minimum on any of our products. Pricing per unit does decrease with volume, but we'll never turn away a small order.</div>
     </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)">
-        What file formats do you need for artwork?
-        <span class="faq-icon">+</span>
+    <div class="founders-col">
+      <div class="section-label">Meet the Team</div>
+      <h2 class="section-title">The people behind the magic.</h2>
+      <div class="founders-cards">
+        <div class="founder-card">
+          <div class="founder-avatar">
+            <span class="founder-avatar-initials">FS</span>
+          </div>
+          <div class="founder-info">
+            <h3>Faran Saeed</h3>
+            <div class="founder-role">Co-Founder — Operations & Fulfilment</div>
+            <p class="founder-bio">Faran keeps the engine running. From supplier relationships to production timelines and quality control, he makes sure every order leaves exactly as promised — on time and to spec. If your merch arrives perfect, that's Faran.</p>
+          </div>
+        </div>
+        <div class="founder-card">
+          <div class="founder-avatar">
+            <span class="founder-avatar-initials">MH</span>
+          </div>
+          <div class="founder-info">
+            <h3>Maryam Hussain</h3>
+            <div class="founder-role">Co-Founder — Customer Experience</div>
+            <p class="founder-bio">Maryam is your first point of contact and your biggest advocate. She works closely with every client to understand their vision, guide them through the process, and make sure the end result is something they're genuinely proud of.</p>
+          </div>
+        </div>
       </div>
-      <div class="faq-answer">Ideally a vector file (AI, EPS, SVG, or PDF) for the sharpest results. But don't worry if you don't have one — send us whatever you have and our design team will prep it for print at no extra cost.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)">
-        How long does delivery take?
-        <span class="faq-icon">+</span>
-      </div>
-      <div class="faq-answer">Standard turnaround is 5–7 business days from artwork approval. Rush orders (2–4 days) are available for most products — just mention this when you get in touch and we'll confirm availability.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)">
-        Can I see a sample before placing a large order?
-        <span class="faq-icon">+</span>
-      </div>
-      <div class="faq-answer">Absolutely. We recommend this for large orders. You can order a small batch or a single sample first. We can also send a blank product sample (at cost) so you can check the fabric and fit before committing to a print run.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)">
-        What printing methods do you offer?
-        <span class="faq-icon">+</span>
-      </div>
-      <div class="faq-answer">We offer screen printing, DTG (direct to garment), embroidery, vinyl heat transfer, and sublimation printing. We'll recommend the best method for your design and quantity when you get in touch.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-question" onclick="toggleFaq(this)">
-        Do you ship outside the UK?
-        <span class="faq-icon">+</span>
-      </div>
-      <div class="faq-answer">We're primarily UK-based but can arrange international shipping for larger orders. Get in touch and we'll work out the best option for you.</div>
     </div>
   </div>
 </section>
