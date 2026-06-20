@@ -256,45 +256,89 @@
     }
 
     /* ── WHY SECTION ──────────────────────────── */
-    .why-section { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .why-header { margin-bottom: 60px; }
-    .feature-chip {
-      width: 44px; height: 44px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.3rem; flex-shrink: 0;
+    .why-section {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
     }
-    .chip-lime { background: var(--accent); color: var(--bg); }
-    .chip-sky { background: var(--accent-mid); color: var(--bg); }
-    .chip-pink { background: var(--accent-light); color: var(--text); }
-    .chip-gold { background: var(--accent); color: var(--bg); }
-    .chip-teal { background: var(--accent-pale); color: var(--accent); border: 1px solid var(--pill-border); }
-    .chip-coral { background: var(--accent-mid); color: var(--bg); }
-    .why-cards {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .why-top { margin-bottom: 60px; }
+    .why-stage {
+      position: relative;
+      min-height: 520px;
+      display: flex; align-items: center;
     }
-    .why-card {
-      padding: 40px 36px;
-      background: #f8f8f6;
-      border: none; border-radius: 16px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
-      transition: transform .25s ease, box-shadow .25s ease;
+    .why-text-lines {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; gap: 4px;
     }
-    .why-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 48px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .why-card-number {
-      font-size: 1.8rem; margin-bottom: 16px; line-height: 1;
-    }
-    .why-card h3 {
+    .why-line {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.15rem; font-weight: 700; color: var(--text);
-      margin-bottom: 12px; letter-spacing: -0.01em;
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.04em; color: var(--text);
+      white-space: nowrap;
     }
-    .why-card p { font-size: .9rem; color: var(--text-muted); line-height: 1.65; }
-    @media (max-width: 900px) { .why-cards { grid-template-columns: 1fr 1fr; } }
-    @media (max-width: 600px) { .why-cards { grid-template-columns: 1fr; } }
+    .why-line.outline {
+      -webkit-text-stroke: 2px var(--text);
+      color: transparent;
+    }
+    .why-line.muted { color: var(--accent); }
+    .why-float {
+      position: absolute; z-index: 2;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+    }
+    .why-float img {
+      display: block; object-fit: cover;
+    }
+    .why-float-1 {
+      width: 200px; height: 240px;
+      top: -20px; right: 60px;
+      transform: rotate(-8deg);
+    }
+    .why-float-2 {
+      width: 170px; height: 200px;
+      bottom: 10px; right: 280px;
+      transform: rotate(5deg);
+    }
+    .why-float-3 {
+      width: 150px; height: 180px;
+      top: 40px; right: 260px;
+      transform: rotate(3deg);
+    }
+    .why-float img { width: 100%; height: 100%; }
+    .why-reasons {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; margin-top: 72px;
+      border-top: 1px solid var(--border);
+    }
+    .why-reason {
+      padding: 32px 32px 32px 0;
+      border-right: 1px solid var(--border);
+    }
+    .why-reason:last-child { border-right: none; padding-right: 0; }
+    .why-reason:nth-child(n+4) { border-top: 1px solid var(--border); padding-top: 32px; }
+    .why-reason h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1rem; font-weight: 800; margin-bottom: 8px;
+    }
+    .why-reason p { font-size: .85rem; color: var(--text-muted); line-height: 1.65; }
+    .why-reason-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .75rem; font-weight: 700; color: var(--accent);
+      letter-spacing: .1em; margin-bottom: 12px;
+    }
+    @media (max-width: 900px) {
+      .why-line { font-size: clamp(2rem, 8vw, 4rem); white-space: normal; }
+      .why-float-1 { width: 130px; height: 160px; right: 10px; }
+      .why-float-2, .why-float-3 { display: none; }
+      .why-reasons { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .why-reasons { grid-template-columns: 1fr; }
+      .why-reason { border-right: none; border-top: 1px solid var(--border); padding: 24px 0; }
+    }
 
     /* ── PRODUCTS ──────────────────────────────── */
     .products-grid {
@@ -465,9 +509,9 @@
     /* ── ETSY SECTION ──────────────────────────── */
     .etsy-section {
       padding: 100px 40px;
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      background: #fff4ef;
+      border-top: 1px solid rgba(241,100,30,0.12);
+      border-bottom: 1px solid rgba(241,100,30,0.12);
     }
     .etsy-inner {
       max-width: 720px;
@@ -703,42 +747,7 @@
 
 <!-- WHY MERCH MAGIC -->
 <section class="why-section" id="why">
-  <div class="why-header">
-    <div class="section-label">Why Merch Magic</div>
-    <h2 class="section-title">Merch that makes people<br>stop and stare.</h2>
-  </div>
-  <div class="why-cards">
-    <div class="why-card">
-      <div class="why-card-number">🔓</div>
-      <h3>No Minimums, Ever</h3>
-      <p>Order 1 or 10,000. Perfect for small batches, prototypes, or testing a design before a big run.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-card-number">⚡</div>
-      <h3>5–7 Day Turnaround</h3>
-      <p>From approved artwork to your door in as little as 5–7 business days. Rush options available.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-card-number">🎨</div>
-      <h3>Free Design Support</h3>
-      <p>Got a rough idea? Our team turns it into print-perfect artwork at no extra cost.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-card-number">✨</div>
-      <h3>Premium Print Quality</h3>
-      <p>Screen print, DTG, embroidery and more — we only use techniques that make your brand look its best.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-card-number">🛡️</div>
-      <h3>Quality Guarantee</h3>
-      <p>Not happy? We'll reprint or refund. No hoops, no hassle — just great merch or your money back.</p>
-    </div>
-    <div class="why-card">
-      <div class="why-card-number">🇬🇧</div>
-      <h3>UK-Based & Ethical</h3>
-      <p>Proudly UK-based with ethical suppliers. Eco-friendly options available across every product line.</p>
-    </div>
-  </div>
+  <img src="why-section.png" alt="Why Merch Magic" style="width:100%;height:auto;display:block;border-radius:20px;">
 </section>
 
 <!-- PRODUCTS GRID -->
@@ -994,7 +1003,7 @@
     </div>
     <h2 class="etsy-title">Browse our shop<br>on <em>Etsy</em>.</h2>
     <p class="etsy-desc">
-      You can find our full range of custom merch on our Etsy store — browse bestsellers, check verified reviews from real customers across the UK, and place your order with secure checkout. It's the easiest way to get started if you already know what you want.
+      We've maintained a <strong style="color:#c94c0c;">★★★★★ 5-star rating for over 3 years</strong> on Etsy — with hundreds of verified reviews from real customers across the UK. Browse our full range, check what others are saying, and place your order with secure checkout. It's the easiest way to get started if you already know what you want.
     </p>
     <a href="https://www.etsy.com/shop/MerchMagicUK" target="_blank" class="btn-etsy">
       Visit Our Etsy Shop →
