@@ -755,7 +755,7 @@
       .products-grid { grid-template-columns: 1fr 1fr; }
       .product-card.featured { grid-column: span 2; }
       .steps-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); align-items: stretch; grid-auto-rows: 1fr; }
       .reviews-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .footer-brand { grid-column: span 2; }
@@ -766,7 +766,6 @@
       .faq-founders-grid { grid-template-columns: 1fr; }
       .faq-col { padding: 60px 24px 40px; }
       .founders-col { padding: 40px 24px 60px; border-left: none; border-top: 1px solid var(--border); }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .stat-item { padding: 28px 16px; }
       .founder-card { flex-direction: column; align-items: center; text-align: center; padding: 28px 24px; }
       .founder-info { width: 100%; }
@@ -818,7 +817,6 @@
       .steps-wrapper::-webkit-scrollbar { display: none; }
       .step-card { flex: 0 0 72vw; scroll-snap-align: start; }
       .step-arrow { flex-shrink: 0; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-ctas { flex-direction: column; }
       .cta-buttons { flex-direction: column; align-items: center; }
       .footer-grid { grid-template-columns: 1fr; }
