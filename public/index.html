@@ -31,7 +31,7 @@
       --pill-border: rgba(30,15,58,0.18);
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
 
     body {
       font-family: 'Inter', sans-serif;
@@ -752,23 +752,27 @@
       .footer-bottom { flex-direction: column; text-align: center; }
     }
     @media (max-width: 600px) {
+      #products { overflow: hidden; }
       .products-grid {
         display: flex; flex-direction: row;
         overflow-x: auto; scroll-snap-type: x mandatory;
         gap: 12px; padding-bottom: 16px;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
+        width: 100%;
       }
       .products-grid::-webkit-scrollbar { display: none; }
       .products-grid .product-card {
         flex: 0 0 72vw; scroll-snap-align: start;
       }
       .product-card.featured { grid-column: span 1; }
+      .how-section { overflow: hidden; }
       .steps-wrapper {
         overflow-x: auto; scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none; padding-bottom: 16px;
         justify-content: flex-start;
+        width: 100%;
       }
       .steps-wrapper::-webkit-scrollbar { display: none; }
       .step-card { flex: 0 0 72vw; scroll-snap-align: start; }
