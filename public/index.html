@@ -343,6 +343,17 @@
       .why-reason { border-right: none; border-top: 1px solid var(--border); padding: 24px 0; }
     }
 
+    /* ── SWIPE HINT ─────────────────────────────── */
+    .swipe-hint { display: none; }
+    .product-card-viewall { display: none; }
+    @media (max-width: 600px) {
+      .swipe-hint {
+        display: flex; align-items: center; gap: 6px;
+        font-size: .82rem; font-weight: 600; color: var(--accent);
+        margin-top: 12px; letter-spacing: .03em;
+      }
+    }
+
     /* ── PRODUCTS ──────────────────────────────── */
     .products-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
@@ -771,6 +782,27 @@
         flex: 0 0 72vw; scroll-snap-align: start;
       }
       .product-card.featured { grid-column: span 1; }
+      .product-card-viewall {
+        flex: 0 0 60vw; scroll-snap-align: start;
+        border: 2px dashed var(--accent-light); border-radius: 20px;
+        display: flex; align-items: center; justify-content: center;
+      }
+      .product-card-viewall a {
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center; gap: 12px; padding: 32px 20px;
+        text-decoration: none; text-align: center;
+      }
+      .viewall-icon {
+        width: 52px; height: 52px; border-radius: 50%;
+        background: var(--accent); color: #fff;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 1.4rem;
+      }
+      .product-card-viewall h3 {
+        font-family: 'Space Grotesk', sans-serif; font-size: 1rem;
+        font-weight: 800; color: var(--text); margin: 0;
+      }
+      .product-card-viewall p { font-size: .8rem; color: var(--text-muted); margin: 0; }
       .how-section { overflow: hidden; }
       .steps-wrapper {
         overflow-x: auto; scroll-snap-type: x mandatory;
@@ -893,6 +925,7 @@
 <section id="products" style="padding: 100px 40px;">
   <div class="section-label">Our Products</div>
   <h2 class="section-title">Everything you need to build a merch empire.</h2>
+  <div class="swipe-hint">Swipe to explore →</div>
   <div class="products-grid">
 
     <!-- IMAGE 1 → save your file as tshirt.jpg (or change the src below) -->
@@ -984,6 +1017,15 @@
         <div class="product-from">From <strong>£6</strong> / unit</div>
         <a href="products.html" class="product-arrow">→</a>
       </div>
+    </div>
+
+    <!-- View All end card (mobile slider only) -->
+    <div class="product-card-viewall">
+      <a href="products.html">
+        <div class="viewall-icon">→</div>
+        <h3>See All Products</h3>
+        <p>Browse our full range of custom merch</p>
+      </a>
     </div>
 
   </div>
