@@ -458,6 +458,7 @@
       background: #f8f8f6; border-radius: 16px;
       box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.1);
       transition: transform .25s ease, box-shadow .25s ease;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
     }
     .stat-item:hover {
       transform: translateY(-6px);
@@ -754,8 +755,7 @@
       .products-grid { grid-template-columns: 1fr 1fr; }
       .product-card.featured { grid-column: span 2; }
       .steps-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); align-items: stretch; }
       .reviews-grid { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
       .footer-brand { grid-column: span 2; }
@@ -766,6 +766,10 @@
       .faq-founders-grid { grid-template-columns: 1fr; }
       .faq-col { padding: 60px 24px 40px; }
       .founders-col { padding: 40px 24px 60px; border-left: none; border-top: 1px solid var(--border); }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-item { padding: 28px 16px; }
+      .founder-card { flex-direction: column; align-items: center; text-align: center; padding: 28px 24px; }
+      .founder-info { width: 100%; }
     }
     @media (max-width: 600px) {
       #products { overflow: hidden; }
