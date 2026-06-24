@@ -686,10 +686,56 @@
       font-size: .8rem; color: var(--text-muted); flex-wrap: wrap; gap: 12px;
     }
 
+    /* ── HAMBURGER ───────────────────────────── */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column; justify-content: center; gap: 5px;
+      width: 40px; height: 40px; cursor: pointer;
+      border: none; background: none; padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: transform .3s, opacity .3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+      background: rgba(248,248,246,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px 28px;
+      flex-direction: column; gap: 4px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      font-size: 1rem; font-weight: 500; color: var(--text);
+      text-decoration: none; padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      transition: color .2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--accent); }
+    .mobile-menu .mobile-cta {
+      margin-top: 16px;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 1rem; font-weight: 600; color: var(--bg);
+      text-decoration: none; padding: 13px 24px;
+      background: var(--accent); border-radius: 100px;
+      transition: opacity .2s;
+    }
+    .mobile-menu .mobile-cta:hover { opacity: .88; border-bottom: none; }
+
     /* ── RESPONSIVE ──────────────────────────── */
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
       .hero { padding: 120px 24px 60px; }
       section { padding: 70px 24px; }
       .why-grid { grid-template-columns: 1fr; gap: 40px; }
@@ -730,7 +776,20 @@
   <div class="nav-actions">
     <a href="https://wa.me/447892734800" target="_blank" class="btn-primary">Get a Quote</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#">Home</a>
+  <a href="products.html">Products</a>
+  <a href="#etsy" style="color:#F1641E;font-weight:600;">Etsy</a>
+  <a href="https://instagram.com/merchmagicuk" target="_blank">Instagram</a>
+  <a href="#faq">FAQ</a>
+  <a href="https://wa.me/447892734800" target="_blank" class="mobile-cta">💬 Get a Free Quote</a>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -1080,6 +1139,16 @@
             <p class="founder-bio">Maryam is your first point of contact and your biggest advocate. She works closely with every client to understand their vision, guide them through the process, and make sure the end result is something they're genuinely proud of.</p>
           </div>
         </div>
+        <div class="founder-card">
+          <div class="founder-avatar">
+            <img src="ali.png" alt="Ali Imran">
+          </div>
+          <div class="founder-info">
+            <h3>Ali Imran</h3>
+            <div class="founder-role">Co-Founder — Supply Chain Excellence</div>
+            <p class="founder-bio">Ali makes sure the supply chain never skips a beat. From sourcing the right materials to managing supplier relationships and keeping costs sharp, he's the reason Merch Magic can deliver premium quality at competitive prices, every single time.</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -1165,6 +1234,21 @@
 </footer>
 
 <script>
+  // Mobile menu toggle
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  // Close menu when a link is clicked
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+    });
+  });
+
   // FAQ toggle
   function toggleFaq(el) {
     const item = el.closest('.faq-item');
