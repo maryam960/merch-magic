@@ -58,6 +58,50 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-links a.active { color: var(--accent); font-weight: 600; }
+
+    /* ── NAV DROPDOWN ── */
+    .nav-links li { position: relative; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(30,15,58,0.12);
+      padding: 6px;
+      min-width: 210px;
+      z-index: 200;
+    }
+    .nav-dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -8px; left: 0; right: 0;
+      height: 8px;
+    }
+    .nav-links li:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 8px;
+      font-size: .85rem; font-weight: 500;
+      color: var(--text); text-decoration: none;
+      transition: background .15s, color .15s;
+    }
+    .nav-dropdown-menu a:hover { background: var(--accent-pale); color: var(--accent); }
+    .nav-dropdown-divider { height: 1px; background: var(--border); margin: 4px 8px; }
+    .nav-dropdown-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .08em;
+      color: var(--text-muted); text-transform: uppercase;
+      padding: 8px 14px 4px;
+    }
+    .nav-dropdown-arrow {
+      font-size: .65rem; opacity: .5;
+      display: inline-block; transition: transform .2s;
+      margin-left: 2px;
+    }
+    .nav-links li:hover .nav-dropdown-arrow { transform: rotate(180deg); }
     .nav-actions { display: flex; gap: 12px; align-items: center; }
     .btn-ghost {
       font-size: .875rem; font-weight: 500; color: var(--text);
@@ -330,7 +374,15 @@
   <a href="/" class="nav-logo">Merch<span>Magic</span></a>
   <ul class="nav-links">
     <li><a href="/">Home</a></li>
-    <li><a href="products.html" class="active">Products</a></li>
+    <li>
+      <a href="/products" class="active">Products <span class="nav-dropdown-arrow">▾</span></a>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">By Industry</div>
+        <a href="/auto">Auto Dealerships</a>
+        <a href="/property">Property Management</a>
+        <a href="/gym">Gyms & Fitness</a>
+      </div>
+    </li>
     <li><a href="/#etsy" style="color:#F1641E;font-weight:600;">Etsy</a></li>
     <li><a href="https://instagram.com/merchmagicuk" target="_blank" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;">Instagram</a></li>
   </ul>
@@ -345,7 +397,10 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="/">Home</a>
-  <a href="products.html">Products</a>
+  <a href="/products">Products</a>
+  <a href="/auto" style="padding-left:28px;font-size:.85rem;opacity:.8;">Auto Dealerships</a>
+  <a href="/property" style="padding-left:28px;font-size:.85rem;opacity:.8;">Property Management</a>
+  <a href="/gym" style="padding-left:28px;font-size:.85rem;opacity:.8;">Gyms & Fitness</a>
   <a href="/#etsy" style="color:#F1641E;font-weight:600;">Etsy</a>
   <a href="https://instagram.com/merchmagicuk" target="_blank">Instagram</a>
   <a href="https://wa.me/447892734800" target="_blank" class="mobile-cta">💬 Get a Free Quote</a>
@@ -367,6 +422,7 @@
   <button class="filter-btn" onclick="filterProducts('drinkware', this)">☕ Drinkware</button>
   <button class="filter-btn" onclick="filterProducts('event', this)">🎉 Event & Promo</button>
   <button class="filter-btn" onclick="filterProducts('bags', this)">👜 Bags</button>
+  <button class="filter-btn" onclick="filterProducts('tech', this)">💻 Tech</button>
 </div>
 
 <!-- PRODUCTS -->
@@ -542,6 +598,22 @@
         </div>
       </div>
 
+      <div class="product-card" data-cat="apparel">
+        <div class="product-img"><img src="socks.png" alt="Branded Socks" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Branded Socks</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Branded%20Socks" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="apparel">
+        <div class="product-img"><img src="apron.png" alt="Aprons" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Aprons</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Aprons" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -622,6 +694,22 @@
         </div>
       </div>
 
+      <div class="product-card" data-cat="stationery">
+        <div class="product-img"><img src="clipboard.png" alt="Branded Clipboards" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Branded Clipboards</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Branded%20Clipboards" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="stationery">
+        <div class="product-img"><img src="mouse-mat.png" alt="Mouse Mats" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Mouse Mats</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Mouse%20Mats" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -651,6 +739,22 @@
         <div class="product-body"><div class="product-name">Tumblers</div></div>
         <div class="product-footer">
           <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Tumblers" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="drinkware">
+        <div class="product-img"><img src="protein-shaker.png" alt="Protein Shakers" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Protein Shakers</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Protein%20Shakers" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="drinkware">
+        <div class="product-img"><img src="mug.png" alt="Mugs" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Mugs</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Mugs" target="_blank" class="btn-quote">Get a Quote →</a>
         </div>
       </div>
 
@@ -702,6 +806,70 @@
         </div>
       </div>
 
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="air-freshener.png" alt="Car Air Fresheners" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Car Air Fresheners</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Car%20Air%20Fresheners" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="banners.png" alt="Site Banners & Signage" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Banners & Signage</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Banners" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="door-hanger.png" alt="Door Hangers" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Door Hangers</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Door%20Hangers" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="gift-box.png" alt="Welcome Gift Boxes" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Welcome Gift Boxes</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Welcome%20Gift%20Boxes" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="gym-towel.png" alt="Gym Towels" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Gym Towels</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Gym%20Towels" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="stress-ball.png" alt="Stress Balls" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Stress Balls</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Stress%20Balls" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="confectionery.png" alt="Branded Confectionery" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Branded Confectionery</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Branded%20Confectionery" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="event">
+        <div class="product-img"><img src="roller-banner.png" alt="Roller Banners" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Roller Banners</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Roller%20Banners" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -742,6 +910,102 @@
         </div>
       </div>
 
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="microfibre-cloth.png" alt="Microfibre Cloths" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Microfibre Cloths</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Microfibre%20Cloths" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="number-plate-surround.png" alt="Number Plate Surrounds" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Number Plate Surrounds</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Number%20Plate%20Surrounds" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="car-mats.png" alt="Branded Car Mats" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Branded Car Mats</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Branded%20Car%20Mats" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="umbrella.png" alt="Branded Umbrellas" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Branded Umbrellas</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Branded%20Umbrellas" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="usb-drive.png" alt="Branded USB Drives" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Branded USB Drives</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Branded%20USB%20Drives" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="gym-bag.png" alt="Gym Duffel Bags" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Gym Duffel Bags</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Gym%20Duffel%20Bags" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="laptop-bag.png" alt="Laptop Bags" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Laptop Bags</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Laptop%20Bags" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="bags">
+        <div class="product-img"><img src="cool-bag.png" alt="Cool Bags" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Cool Bags & Lunch Bags</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Cool%20Bags" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TECH & ACCESSORIES -->
+  <div class="category-block" data-section="tech">
+    <div class="category-label">Tech & Accessories</div>
+    <div class="products-grid grid-4">
+
+      <div class="product-card" data-cat="tech">
+        <div class="product-img"><img src="power-bank.png" alt="Power Banks" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Power Banks</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Power%20Banks" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="tech">
+        <div class="product-img"><img src="phone-case.png" alt="Phone Cases" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Phone Cases</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Phone%20Cases" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="tech">
+        <div class="product-img"><img src="charging-cable.png" alt="Branded Charging Cables" loading="lazy"></div>
+        <div class="product-body"><div class="product-name">Charging Cables</div></div>
+        <div class="product-footer">
+          <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20Charging%20Cables" target="_blank" class="btn-quote">Get a Quote →</a>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -776,6 +1040,7 @@
         <li><a href="#" onclick="filterProducts('drinkware', document.querySelector('[onclick*=drinkware]'))">Drinkware</a></li>
         <li><a href="#" onclick="filterProducts('event', document.querySelector('[onclick*=event]'))">Event & Promo</a></li>
         <li><a href="#" onclick="filterProducts('bags', document.querySelector('[onclick*=bags]'))">Bags</a></li>
+        <li><a href="#" onclick="filterProducts('tech', document.querySelector('[onclick*=tech]'))">Tech</a></li>
       </ul>
     </div>
     <div class="footer-col">

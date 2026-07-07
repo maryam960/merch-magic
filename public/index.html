@@ -72,6 +72,50 @@
       letter-spacing: 0.01em;
     }
     .nav-links a:hover { color: var(--text); }
+
+    /* ── NAV DROPDOWN ── */
+    .nav-links li { position: relative; }
+    .nav-dropdown-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(30,15,58,0.12);
+      padding: 6px;
+      min-width: 210px;
+      z-index: 200;
+    }
+    .nav-dropdown-menu::before {
+      content: '';
+      position: absolute;
+      top: -8px; left: 0; right: 0;
+      height: 8px;
+    }
+    .nav-links li:hover .nav-dropdown-menu { display: block; }
+    .nav-dropdown-menu a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 8px;
+      font-size: .85rem; font-weight: 500;
+      color: var(--text); text-decoration: none;
+      transition: background .15s, color .15s;
+    }
+    .nav-dropdown-menu a:hover { background: var(--accent-pale); color: var(--accent); }
+    .nav-dropdown-label {
+      font-size: .7rem; font-weight: 600; letter-spacing: .08em;
+      color: var(--text-muted); text-transform: uppercase;
+      padding: 8px 14px 4px;
+    }
+    .nav-dropdown-arrow {
+      font-size: .65rem; opacity: .5;
+      display: inline-block; transition: transform .2s;
+      margin-left: 2px;
+    }
+    .nav-links li:hover .nav-dropdown-arrow { transform: rotate(180deg); }
+
     .nav-actions { display: flex; gap: 12px; align-items: center; }
     .btn-ghost {
       font-size: .875rem; font-weight: 500; color: var(--text);
@@ -833,7 +877,15 @@
   <a href="#" class="nav-logo">Merch<span>Magic</span></a>
   <ul class="nav-links">
     <li><a href="#">Home</a></li>
-    <li><a href="products">Products</a></li>
+    <li>
+      <a href="/products">Products <span class="nav-dropdown-arrow">▾</span></a>
+      <div class="nav-dropdown-menu">
+        <div class="nav-dropdown-label">By Industry</div>
+        <a href="/auto">Auto Dealerships</a>
+        <a href="/property">Property Management</a>
+        <a href="/gym">Gyms & Fitness</a>
+      </div>
+    </li>
     <li><a href="#etsy" style="color:#F1641E;font-weight:600;">Etsy</a></li>
     <li><a href="https://instagram.com/merchmagicuk" target="_blank" style="background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;">Instagram</a></li>
   </ul>
@@ -848,7 +900,10 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#">Home</a>
-  <a href="products">Products</a>
+  <a href="/products">Products</a>
+  <a href="/auto" style="padding-left:28px;font-size:.85rem;opacity:.8;">Auto Dealerships</a>
+  <a href="/property" style="padding-left:28px;font-size:.85rem;opacity:.8;">Property Management</a>
+  <a href="/gym" style="padding-left:28px;font-size:.85rem;opacity:.8;">Gyms & Fitness</a>
   <a href="#etsy" style="color:#F1641E;font-weight:600;">Etsy</a>
   <a href="https://instagram.com/merchmagicuk" target="_blank">Instagram</a>
   <a href="#faq">FAQ</a>
