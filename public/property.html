@@ -149,9 +149,19 @@
       padding: 160px 40px 80px;
       border-bottom: 1px solid var(--border);
       display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: end;
-      gap: 40px;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 60px;
+    }
+    .industry-hero-image {
+      aspect-ratio: 1/1;
+      border-radius: 20px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .industry-hero-image img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
     }
     .industry-hero-title {
       font-family: 'Space Grotesk', sans-serif;
@@ -358,19 +368,8 @@
     <h1 class="industry-hero-title">Merch that makes your<br><em>brand feel premium.</em></h1>
     <p class="industry-hero-sub">From branded clipboards and staff uniforms to client welcome gifts and site signage — we help property managers look professional at every touchpoint.</p>
   </div>
-  <div class="industry-hero-stats">
-    <div class="industry-stat-item">
-      <span class="industry-stat-num">No</span>
-      <span class="industry-stat-label">Minimum orders</span>
-    </div>
-    <div class="industry-stat-item">
-      <span class="industry-stat-num">5–7</span>
-      <span class="industry-stat-label">Day turnaround</span>
-    </div>
-    <div class="industry-stat-item">
-      <span class="industry-stat-num">UK</span>
-      <span class="industry-stat-label">Based & delivered</span>
-    </div>
+  <div class="industry-hero-image">
+    <!-- Add your image here: <img src="your-image.jpg" alt="Property Merch"> -->
   </div>
 </div>
 
