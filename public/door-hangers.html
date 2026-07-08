@@ -54,13 +54,14 @@
     .why-img{border-radius:24px;overflow:hidden;aspect-ratio:4/5;background:var(--accent-pale);}
     .why-img img{width:100%;height:100%;object-fit:cover;display:block;}
     .process-section{background:var(--bg);}
-    .process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:48px;}
-    .process-step{background:#fff;border:1px solid var(--border);border-radius:20px;padding:28px 22px;position:relative;}
-    .process-num{width:38px;height:38px;border-radius:11px;background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
-    .process-icon{font-size:1.7rem;margin-bottom:10px;}
-    .process-step h3{font-family:'Space Grotesk',sans-serif;font-size:.9rem;font-weight:800;margin-bottom:6px;}
-    .process-step p{font-size:.82rem;color:var(--text-muted);line-height:1.6;}
-    .process-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);color:var(--accent-light);font-size:1.3rem;z-index:1;}
+    .steps-wrapper{display:flex;align-items:flex-start;gap:0;justify-content:center;margin-top:48px;}
+    .step-card{padding:48px 28px;border:1.5px solid #e8e4f8;border-radius:20px;background:#fff;position:relative;text-align:center;flex:1;box-shadow:0 2px 12px rgba(91,33,182,0.06);min-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
+    .step-badge{width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;position:absolute;top:-18px;left:50%;transform:translateX(-50%);box-shadow:0 4px 12px rgba(91,33,182,0.3);}
+    .step-illustration{width:180px;height:180px;border-radius:50%;background:#ede9fe;margin:20px auto 24px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .step-illustration img{width:90%;height:90%;object-fit:contain;}
+    .step-card h3{font-family:'Space Grotesk',sans-serif;font-size:1rem;font-weight:800;margin-bottom:10px;color:var(--text);}
+    .step-card p{font-size:.82rem;color:var(--text-muted);line-height:1.6;margin:0;}
+    .step-arrow{font-size:1.6rem;color:var(--accent);flex-shrink:0;align-self:center;padding:0 8px;margin-top:-10px;}
     .testimonials-section{background:linear-gradient(135deg,#2d1260 0%,#5b21b6 60%,#4c1d95 100%);}
     .testimonials-section .section-label{color:var(--accent-light);}
     .testimonials-section .section-title{color:#faf4e8;}
@@ -99,14 +100,15 @@
       .section{padding:56px 24px;}
       .why-grid{grid-template-columns:1fr;}
       .why-img{display:none;}
-      .process-grid{grid-template-columns:repeat(2,1fr);}
-      .process-arrow{display:none;}
+      .steps-wrapper{flex-direction:column;gap:0;overflow:hidden;}
+      .step-card{min-height:auto;width:100%;}
+      .step-illustration{width:130px;height:130px;}
+      .step-arrow{align-self:center;transform:rotate(90deg);padding:4px 0;font-size:1.2rem;}
       .t-grid{grid-template-columns:1fr;}
       .faq-grid{grid-template-columns:1fr;}
       .final-cta{padding:60px 24px;}
       .lp-footer{padding:18px 24px;flex-direction:column;text-align:center;}
     }
-    @media(max-width:500px){.process-grid{grid-template-columns:1fr;}}
   </style>
 </head>
 <body>
@@ -196,29 +198,33 @@
     <h2 class="section-title">Your order in <em>4 simple steps.</em></h2>
     <p class="section-sub">From brief to your door in as little as 5–7 business days.</p>
   </div>
-  <div class="process-grid">
-    <div class="process-step">
-      <div class="process-num">1</div><div class="process-icon">💬</div>
-      <h3>Send Us Your Brief</h3>
-      <p>Tell us your design, colours, quantity and requirements via WhatsApp. Attach your logo or describe what you need.</p>
-      <div class="process-arrow">→</div>
+  <div class="steps-wrapper">
+    <div class="step-card">
+      <div class="step-badge">1</div>
+      <div class="step-illustration"><img src="Step1.png" alt="Tell us what you want" loading="lazy"></div>
+      <h3>You tell us what you want</h3>
+      <p>Share your idea, design, colours and any instructions.</p>
     </div>
-    <div class="process-step">
-      <div class="process-num">2</div><div class="process-icon">🖥️</div>
-      <h3>Get a Free Mockup</h3>
-      <p>Our design team creates a full-colour digital mockup. See exactly what it'll look like before we produce anything.</p>
-      <div class="process-arrow">→</div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="step-badge">2</div>
+      <div class="step-illustration"><img src="Step2.png" alt="Digital mockups" loading="lazy"></div>
+      <h3>We send you free digital mockups</h3>
+      <p>We create and send you digital mockups as per your instructions.</p>
     </div>
-    <div class="process-step">
-      <div class="process-num">3</div><div class="process-icon">✅</div>
-      <h3>Approve &amp; Order</h3>
-      <p>Happy with the mockup? Give the green light and place your order. All major payments accepted.</p>
-      <div class="process-arrow">→</div>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="step-badge">3</div>
+      <div class="step-illustration"><img src="Step3.png" alt="Confirm order" loading="lazy"></div>
+      <h3>You confirm and place the order</h3>
+      <p>You're happy with the mockup? Confirm and place your order.</p>
     </div>
-    <div class="process-step">
-      <div class="process-num">4</div><div class="process-icon">🚚</div>
-      <h3>Delivered to Your Door</h3>
-      <p>Produced, quality checked, packed and shipped to you within 5–7 business days. Tracked delivery included.</p>
+    <div class="step-arrow">→</div>
+    <div class="step-card">
+      <div class="step-badge">4</div>
+      <div class="step-illustration"><img src="Step4.png" alt="Ship to you" loading="lazy"></div>
+      <h3>We fulfill it and ship it to you</h3>
+      <p>We produce, quality check, pack and ship it to your door.</p>
     </div>
   </div>
   <div style="text-align:center;margin-top:44px;">
