@@ -488,17 +488,17 @@
     }
 
     /* ── BRANDS WE WORK WITH ──────────────────────── */
-    .brands-section { background: #f8f7ff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; overflow: hidden; }
+    .brands-marquee-section { background: #f8f7ff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; overflow: hidden; padding-top: 120px; }
     .brands-marquee {
       overflow: hidden; width: 100%; margin-top: 8px;
       -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
       mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
     }
-    .brands-track {
+    .brands-marquee-track {
       display: flex; align-items: center; gap: 32px; width: max-content;
       animation: brandsScroll 28s linear infinite;
     }
-    .brands-section:hover .brands-track { animation-play-state: paused; }
+    .brands-marquee-section:hover .brands-marquee-track { animation-play-state: paused; }
     @keyframes brandsScroll {
       from { transform: translateX(0); }
       to { transform: translateX(-50%); }
@@ -1148,12 +1148,12 @@
 </section>
 
 <!-- BRANDS WE WORK WITH -->
-<section class="brands-section">
+<section class="brands-marquee-section">
   <div class="how-label">Trusted By</div>
   <h2 class="how-title">Brands We <span>Work With</span></h2>
   <div class="how-underline"></div>
   <div class="brands-marquee">
-    <div class="brands-track">
+    <div class="brands-marquee-track">
       <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
       <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
       <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
