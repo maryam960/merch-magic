@@ -487,6 +487,35 @@
       align-self: center; padding: 0 8px; margin-top: -10px;
     }
 
+    /* ── BRANDS WE WORK WITH ──────────────────────── */
+    .brands-section { background: #f8f7ff; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); text-align: center; overflow: hidden; }
+    .brands-marquee {
+      overflow: hidden; width: 100%; margin-top: 8px;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    }
+    .brands-track {
+      display: flex; align-items: center; gap: 32px; width: max-content;
+      animation: brandsScroll 28s linear infinite;
+    }
+    .brands-section:hover .brands-track { animation-play-state: paused; }
+    @keyframes brandsScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .brand-logo-slot {
+      flex: 0 0 auto;
+      width: 170px; height: 84px;
+      display: flex; align-items: center; justify-content: center;
+      background: #fff; border: 1.5px dashed var(--border); border-radius: 14px;
+    }
+    .brand-logo-slot img { max-width: 80%; max-height: 60%; object-fit: contain; filter: grayscale(1); opacity: .7; transition: opacity .2s, filter .2s; }
+    .brand-logo-slot:hover img { opacity: 1; filter: grayscale(0); }
+    .brand-logo-placeholder {
+      font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .82rem;
+      color: var(--text-muted); letter-spacing: .02em;
+    }
+
     /* ── STATS ──────────────────────────────────── */
     .stats-section {
       padding: 100px 40px;
@@ -853,6 +882,7 @@
       }
       .product-card-viewall p { font-size: .8rem; color: var(--text-muted); margin: 0; }
       .how-section { overflow: hidden; }
+      .brand-logo-slot { width: 130px; height: 68px; }
       .steps-wrapper {
         overflow-x: auto; scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
@@ -1081,8 +1111,8 @@
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="how-section" id="how">
+<!-- HOW IT WORKS (hidden — pending brands slider to replace this) -->
+<section class="how-section" id="how" style="display:none;">
   <div class="how-label">Our Merch</div>
   <h2 class="how-title">In <span>4</span> Simple Steps</h2>
   <div class="how-underline"></div>
@@ -1113,6 +1143,34 @@
       <div class="step-illustration"><img src="Step4.png" alt="Ship to you" loading="lazy"></div>
       <h3>We fulfill it and ship it to you</h3>
       <p>We produce, quality check, pack and ship it to your door.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BRANDS WE WORK WITH -->
+<section class="brands-section">
+  <div class="how-label">Trusted By</div>
+  <h2 class="how-title">Brands We <span>Work With</span></h2>
+  <div class="how-underline"></div>
+  <div class="brands-marquee">
+    <div class="brands-track">
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <!-- duplicated set for seamless loop -->
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
+      <div class="brand-logo-slot" aria-hidden="true"><span class="brand-logo-placeholder">Your Logo</span></div>
     </div>
   </div>
 </section>
