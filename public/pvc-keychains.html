@@ -69,12 +69,9 @@
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
       padding: 120px 40px 80px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
-      gap: 60px;
+      display: flex;
+      flex-direction: column;
       position: relative;
       overflow: hidden;
     }
@@ -131,6 +128,8 @@
     .hero-cta-note strong { color: var(--green); }
     .hero-visual {
       position: relative;
+      max-width: 480px;
+      margin: 4px 0 32px;
     }
     .hero-img-wrap {
       border-radius: 28px; overflow: hidden;
@@ -409,8 +408,8 @@
     @media (max-width: 900px) {
       .top-bar { padding: 14px 20px; }
       .top-bar-trust { display: none; }
-      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
-      .hero-visual { order: -1; }
+      .hero { padding: 100px 24px 60px; }
+      .hero-visual { max-width: 100%; }
       .float-card-1 { bottom: -10px; left: -10px; }
       .float-card-2 { top: 15px; right: -10px; }
       .trust-bar { padding: 20px 24px; gap: 24px; }
@@ -459,21 +458,6 @@
     <p class="hero-sub">
       Fully custom-shaped PVC keychains with your logo, mascot or design — printed in full colour, built to last. <strong>No minimum order. Free digital mockup.</strong> Delivered in 5–7 days.
     </p>
-    <div class="hero-chips">
-      <span class="hero-chip"><span class="icon">✓</span> No Minimum Order</span>
-      <span class="hero-chip"><span class="icon">🎨</span> Free Digital Mockup</span>
-      <span class="hero-chip"><span class="icon">🚚</span> 5–7 Day Delivery</span>
-      <span class="hero-chip"><span class="icon">🇬🇧</span> UK Based</span>
-    </div>
-    <div class="hero-cta-row">
-      <a href="https://wa.me/447892734800?text=Hi%2C%20I'd%20like%20a%20quote%20for%20custom%20PVC%20keychains" target="_blank" class="btn-wa btn-wa-large">
-        💬 Get a Free Quote on WhatsApp
-      </a>
-    </div>
-    <p class="hero-cta-note" style="margin-top:14px;">
-      <strong>⚡ Usually replies within 1 hour</strong> · No obligation · Free design support
-    </p>
-  </div>
   <div class="hero-visual">
     <div class="hero-img-wrap">
       <img src="keychains.png" alt="Custom PVC Keychains by Merch Magic">
@@ -488,6 +472,16 @@
       <div class="float-card-value">5,000+</div>
       <div style="font-size:.75rem;color:var(--text-muted);margin-top:2px;">Across the UK</div>
     </div>
+  </div>
+    <div class="hero-chips">
+      <span class="hero-chip"><span class="icon">✓</span> No Minimum Order</span>
+      <span class="hero-chip"><span class="icon">🎨</span> Free Digital Mockup</span>
+      <span class="hero-chip"><span class="icon">🚚</span> 5–7 Day Delivery</span>
+      <span class="hero-chip"><span class="icon">🇬🇧</span> UK Based</span>
+    </div>
+    <p class="hero-cta-note" style="margin-top:14px;">
+      <strong>⚡ Usually replies within 1 hour</strong> · No obligation · Free design support
+    </p>
   </div>
 </section>
 
@@ -765,5 +759,7 @@
   }
 </style>
 
+<script>window.__PRODUCT__ = { id: "pvc-keychains", name: "PVC Keychains", image: "keychains.png" };</script>
+<script src="cart.js" defer></script>
 </body>
 </html>

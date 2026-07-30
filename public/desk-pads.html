@@ -22,7 +22,7 @@
     .btn-wa{display:inline-flex;align-items:center;gap:8px;font-size:.875rem;font-weight:700;color:#fff;text-decoration:none;padding:10px 22px;background:#25D366;border-radius:100px;transition:opacity .2s,transform .2s;white-space:nowrap;box-shadow:0 4px 14px rgba(37,211,102,0.35);}
     .btn-wa:hover{opacity:.92;transform:translateY(-1px);}
     .btn-wa-large{font-size:1.05rem;padding:16px 32px;box-shadow:0 8px 24px rgba(37,211,102,0.4);}
-    .hero{min-height:100vh;padding:120px 40px 80px;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;position:relative;overflow:hidden;}
+    .hero{padding:120px 40px 80px;display:flex;flex-direction:column;position:relative;overflow:hidden;}
     .hero::before{content:'';position:absolute;top:-200px;right:-100px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(91,33,182,0.1) 0%,transparent 70%);pointer-events:none;}
     .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-pale);border:1px solid rgba(91,33,182,0.2);border-radius:100px;padding:6px 14px;font-size:.78rem;font-weight:700;color:var(--accent);margin-bottom:24px;letter-spacing:.04em;text-transform:uppercase;}
     .hero-badge-dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2s ease-in-out infinite;}
@@ -33,7 +33,7 @@
     .hero-sub strong{color:var(--text);font-weight:600;}
     .hero-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:32px;}
     .hero-chip{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:7px 14px;font-size:.8rem;font-weight:600;color:var(--text);}
-    .hero-img-wrap{border-radius:28px;overflow:hidden;aspect-ratio:1/1;background:var(--accent-pale);border:1px solid rgba(91,33,182,0.15);}
+    .hero-img-wrap{border-radius:28px;overflow:hidden;aspect-ratio:1/1;background:var(--accent-pale);border:1px solid rgba(91,33,182,0.15);max-width:480px;margin:4px 0 8px;}
     .hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;}
     .trust-bar{background:var(--text);padding:24px 40px;display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap;}
     .trust-item .num{font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:800;color:#fff;line-height:1;}
@@ -94,7 +94,7 @@
     @media(max-width:900px){
       .top-bar{padding:14px 20px;}
       .top-bar-trust{display:none;}
-      .hero{grid-template-columns:1fr;padding:100px 24px 60px;gap:36px;}
+      .hero{padding:100px 24px 60px;}
       .trust-bar{padding:20px 24px;gap:24px;}
       .trust-div{display:none;}
       .section{padding:56px 24px;}
@@ -124,19 +124,17 @@
     <div class="hero-badge"><span class="hero-badge-dot"></span>Stationery · UK</div>
     <h1 class="hero-title">Branded Desk Pads<br><em>That Earn Their Place on Every Desk.</em></h1>
     <p class="hero-sub">Custom branded desk pads and planning pads with your logo. A premium, practical item that sits on desks all year — keeping your brand front of mind with every planning session.</p>
+
+    <div class="hero-img-wrap">
+      <img src="desk-pad.png" alt="Desk Pads & Planners by Merch Magic">
+    </div>
     <div class="hero-chips">
       <span class="hero-chip">✓ No Minimum Order</span>
       <span class="hero-chip">🎨 Free Digital Mockup</span>
       <span class="hero-chip">🚚 5–7 Day Delivery</span>
       <span class="hero-chip">🇬🇧 UK Based</span>
     </div>
-    <a href="https://wa.me/447892734800?text=Hi%2C%20I%27d%20like%20a%20quote%20for%20Custom%20Branded%20Desk%20Pads" target="_blank" class="btn-wa btn-wa-large">💬 Get a Free Quote on WhatsApp</a>
     <p style="margin-top:12px;font-size:.8rem;color:var(--text-muted);">⚡ Usually replies within 1 hour · Free mockup included · No obligation</p>
-  </div>
-  <div>
-    <div class="hero-img-wrap">
-      <img src="desk-pad.png" alt="Desk Pads & Planners by Merch Magic">
-    </div>
   </div>
 </section>
 <div class="trust-bar">
@@ -343,5 +341,7 @@
   }
 </style>
 
+<script>window.__PRODUCT__ = { id: "desk-pads", name: "Desk Pads & Planners", image: "desk-pad.png" };</script>
+<script src="cart.js" defer></script>
 </body>
 </html>

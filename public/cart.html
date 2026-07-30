@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart | Merch Magic</title>
+  <meta name="description" content="Review your Merch Magic order — adjust quantities, add instructions per item, then checkout on WhatsApp.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--bg:#f8f8f6;--bg2:#f0f0ee;--text:#1e0f3a;--text-muted:rgba(30,15,58,0.45);--accent:#5b21b6;--accent-light:#a78bfa;--accent-pale:#ede9fe;--border:rgba(30,15,58,0.1);}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    .top-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,248,246,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;}
+    .top-bar-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.25rem;color:var(--text);text-decoration:none;}
+    .top-bar-logo span{color:var(--accent);}
+    .top-bar-right{display:flex;align-items:center;gap:16px;}
+    .top-bar-link{font-size:.85rem;font-weight:600;color:var(--text-muted);text-decoration:none;}
+    .top-bar-link:hover{color:var(--text);}
+    .page-head{padding:140px 40px 40px;max-width:640px;margin:0 auto;text-align:center;}
+    .page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+    .page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,2.8rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:12px;}
+    .page-sub{font-size:.95rem;color:var(--text-muted);line-height:1.6;}
+    main{padding:0 40px 100px;}
+    .lp-footer{padding:22px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:60px;}
+    .lp-footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;color:var(--text);text-decoration:none;}
+    .lp-footer-logo span{color:var(--accent);}
+    .lp-footer p,.lp-footer a{font-size:.8rem;color:var(--text-muted);text-decoration:none;}
+    @media(max-width:600px){
+      .top-bar{padding:14px 20px;}
+      .page-head{padding:120px 20px 32px;}
+      main{padding:0 20px 80px;}
+      .lp-footer{padding:18px 20px;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/" class="top-bar-logo">Merch<span>Magic</span></a>
+  <div class="top-bar-right">
+    <a href="/products" class="top-bar-link">← Continue Browsing</a>
+  </div>
+</div>
+
+<div class="page-head">
+  <div class="page-label">Your Order</div>
+  <h1 class="page-title">Review your cart</h1>
+  <p class="page-sub">Adjust quantities, add any instructions per item, then send it straight to us on WhatsApp — no account, no payment needed here.</p>
+</div>
+
+<main>
+  <div id="cart-page-root"></div>
+</main>
+
+<footer class="lp-footer">
+  <a href="/" class="lp-footer-logo">Merch<span>Magic</span></a>
+  <p>© 2026 Merch Magic. All rights reserved.</p>
+  <a href="mailto:maryam@merchmagic.uk">maryam@merchmagic.uk</a>
+</footer>
+
+<script src="cart.js" defer></script>
+</body>
+</html>
