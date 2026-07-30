@@ -69,11 +69,12 @@
 
     /* ── HERO ── */
     .hero {
-      max-width: 680px;
-      margin: 0 auto;
+      min-height: 100vh;
       padding: 120px 40px 80px;
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
       position: relative;
       overflow: hidden;
     }
@@ -410,7 +411,7 @@
     @media (max-width: 900px) {
       .top-bar { padding: 14px 20px; }
       .top-bar-trust { display: none; }
-      .hero { padding: 100px 24px 60px; }
+      .hero { grid-template-columns: 1fr; padding: 100px 24px 60px; gap: 40px; }
       .hero-visual { max-width: 100%; }
       .float-card-1 { bottom: -10px; left: -10px; }
       .float-card-2 { top: 15px; right: -10px; }
@@ -447,7 +448,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
+  <div class="hero-left">
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
       Custom Trolley Coin Keychains · UK
@@ -460,6 +461,8 @@
     <p class="hero-sub">
       Branded trolley coins on a keyring — always to hand for the supermarket run, and a constant, everyday reminder of your business. <strong>No minimum order. Free digital mockup.</strong> Delivered in 5–7 days.
     </p>
+  </div>
+  <div class="hero-right">
   <div class="hero-visual">
     <div class="hero-img-wrap">
       <img src="trolley-coin-keychain.png" alt="Custom Trolley Coin Keychains by Merch Magic">

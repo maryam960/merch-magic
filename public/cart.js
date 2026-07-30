@@ -127,6 +127,9 @@
       ".mm-atc-qty button{width:36px;height:40px;border:none;background:#fff;cursor:pointer;font-size:1.1rem;color:" + PURPLE_DARK + ";}",
       ".mm-atc-qty button:hover{background:#f0f0ee;}",
       ".mm-atc-qty span{min-width:32px;text-align:center;font-weight:700;font-size:.9rem;}",
+      ".mm-qty-input{width:44px;min-width:44px;text-align:center;font-weight:700;font-size:.9rem;font-family:'Inter',sans-serif;border:none;background:transparent;color:" + PURPLE_DARK + ";-moz-appearance:textfield;}",
+      ".mm-qty-input::-webkit-outer-spin-button,.mm-qty-input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}",
+      ".mm-qty-input:focus{outline:none;background:#f0f0ee;border-radius:4px;}",
       ".mm-btn-atc{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:100px;background:" + PURPLE + ";color:#fff;border:none;font-weight:700;font-size:.9rem;cursor:pointer;white-space:nowrap;transition:opacity .2s,transform .2s;}",
       ".mm-btn-atc:hover{opacity:.9;transform:translateY(-1px);}",
       ".mm-btn-atc.added{background:" + GREEN + ";}",
@@ -209,7 +212,7 @@
       '<div class="mm-cart-qty-row">' +
       '<div class="mm-atc-qty">' +
       '<button type="button" data-action="dec">−</button>' +
-      '<span>' + item.qty + "</span>" +
+      '<input type="number" class="mm-qty-input" min="1" value="' + item.qty + '">' +
       '<button type="button" data-action="inc">+</button>' +
       "</div>" +
       '<button type="button" class="mm-cart-remove">Remove</button>' +
@@ -228,6 +231,15 @@
     rowEl.querySelector('[data-action="dec"]').addEventListener("click", function () {
       var item = getCart().find(function (i) { return i.id === id; });
       updateQty(id, (item ? item.qty : 1) - 1);
+    });
+    var qtyInput = rowEl.querySelector(".mm-qty-input");
+    qtyInput.addEventListener("change", function () {
+      var val = parseInt(qtyInput.value, 10);
+      if (isNaN(val)) val = 1;
+      updateQty(id, val);
+    });
+    qtyInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") qtyInput.blur();
     });
     rowEl.querySelector(".mm-cart-remove").addEventListener("click", function () {
       removeItem(id);
@@ -296,23 +308,32 @@
     widget.innerHTML =
       '<div class="mm-atc-qty">' +
       '<button type="button" data-action="dec">−</button>' +
-      '<span>1</span>' +
+      '<input type="number" class="mm-qty-input" min="1" value="1">' +
       '<button type="button" data-action="inc">+</button>' +
       "</div>" +
       '<button type="button" class="mm-btn-atc">🛒 Add to Cart</button>';
     mount.parentNode.insertBefore(widget, mount.nextSibling);
 
-    var qty = 1;
-    var qtySpan = widget.querySelector(".mm-atc-qty span");
+    var qtyInput = widget.querySelector(".mm-qty-input");
+    function currentQty() {
+      var val = parseInt(qtyInput.value, 10);
+      return isNaN(val) || val < 1 ? 1 : val;
+    }
     widget.querySelector('[data-action="inc"]').addEventListener("click", function () {
-      qty++; qtySpan.textContent = qty;
+      qtyInput.value = currentQty() + 1;
     });
     widget.querySelector('[data-action="dec"]').addEventListener("click", function () {
-      qty = Math.max(1, qty - 1); qtySpan.textContent = qty;
+      qtyInput.value = Math.max(1, currentQty() - 1);
+    });
+    qtyInput.addEventListener("change", function () {
+      qtyInput.value = currentQty();
+    });
+    qtyInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") qtyInput.blur();
     });
     var atcBtn = widget.querySelector(".mm-btn-atc");
     atcBtn.addEventListener("click", function () {
-      addToCart(product, qty);
+      addToCart(product, currentQty());
       atcBtn.textContent = "✓ Added";
       atcBtn.classList.add("added");
       openDrawer();
