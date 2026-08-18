@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /cart
 
-Sitemap: https://merchmagic.uk/sitemap.xml
+Sitemap: https://www.merchmagic.uk/sitemap.xml
