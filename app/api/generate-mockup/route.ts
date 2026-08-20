@@ -83,10 +83,11 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await client.images.edit({
-      model: "gpt-image-1",
+      model: "gpt-image-1-mini",
       image: images,
       prompt: finalPrompt,
       size: "1024x1024",
+      quality: "medium",
     });
 
     const b64 = result.data?.[0]?.b64_json;
