@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Your Own Mockup | Merch Magic</title>
+  <meta name="description" content="Upload your logo, pick a product, and see an instant mockup of your branded merch — then send it to us on WhatsApp or email.">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@700;800&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+    :root{--bg:#f8f8f6;--bg2:#f0f0ee;--text:#1e0f3a;--text-muted:rgba(30,15,58,0.45);--accent:#5b21b6;--accent-light:#a78bfa;--accent-pale:#ede9fe;--border:rgba(30,15,58,0.1);--green:#25D366;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+
+    .top-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,248,246,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;}
+    .top-bar-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.25rem;color:var(--text);text-decoration:none;}
+    .top-bar-logo span{color:var(--accent);}
+    .top-bar-link{font-size:.85rem;font-weight:600;color:var(--text-muted);text-decoration:none;}
+    .top-bar-link:hover{color:var(--text);}
+
+    .page-head{padding:140px 40px 20px;max-width:720px;margin:0 auto;text-align:center;}
+    .page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
+    .page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:14px;}
+    .page-title em{font-style:normal;color:var(--accent);}
+    .page-sub{font-size:.98rem;color:var(--text-muted);line-height:1.6;}
+
+    main{max-width:1100px;margin:0 auto;padding:40px 40px 100px;}
+    .maker-grid{display:grid;grid-template-columns:380px 1fr;gap:48px;align-items:start;}
+
+    .step{margin-bottom:32px;}
+    .step-label{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:14px;}
+    .step-num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;}
+
+    select{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:#fff;font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text);cursor:pointer;}
+
+    .upload-zone{border:2px dashed var(--border);border-radius:14px;padding:28px 16px;text-align:center;cursor:pointer;background:#fff;transition:border-color .2s,background .2s;}
+    .upload-zone:hover, .upload-zone.dragover{border-color:var(--accent);background:var(--accent-pale);}
+    .upload-zone input{display:none;}
+    .upload-icon{font-size:1.8rem;margin-bottom:8px;}
+    .upload-text{font-size:.85rem;color:var(--text-muted);}
+    .upload-text strong{color:var(--accent);}
+    .upload-filename{margin-top:10px;font-size:.8rem;color:var(--text);font-weight:600;word-break:break-all;}
+
+    .step-optional{font-weight:500;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:.8rem;}
+    .notes-textarea{width:100%;min-height:80px;padding:12px 16px;border:1px solid var(--border);border-radius:12px;background:#fff;font-family:'Inter',sans-serif;font-size:.85rem;color:var(--text);resize:vertical;}
+
+    .canvas-wrap{background:#fff;border:1px solid var(--border);border-radius:20px;padding:20px;box-shadow:0 8px 32px rgba(30,15,58,0.06);}
+    .canvas-stage{position:relative;width:100%;aspect-ratio:1/1;border-radius:14px;overflow:hidden;background:var(--accent-pale);touch-action:none;}
+    #mockupCanvas{width:100%;height:100%;display:block;cursor:grab;}
+    #mockupCanvas.dragging{cursor:grabbing;}
+    .canvas-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);font-size:.9rem;text-align:center;padding:20px;gap:8px;}
+    .canvas-hint{margin-top:14px;font-size:.78rem;color:var(--text-muted);text-align:center;}
+
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px;}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:100px;font-weight:700;font-size:.9rem;cursor:pointer;border:none;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,opacity .2s;flex:1;min-width:160px;}
+    .btn:hover{transform:translateY(-2px);}
+    .btn:active{transform:translateY(1px);}
+    .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none;}
+    .btn-download{background:linear-gradient(180deg,#7c3aed 0%,var(--accent) 100%);color:#fff;box-shadow:0 3px 0 #3f1a7a,0 8px 16px rgba(91,33,182,0.32),inset 0 1px 0 rgba(255,255,255,0.25);}
+    .btn-download:hover{box-shadow:0 5px 0 #3f1a7a,0 10px 20px rgba(91,33,182,0.4),inset 0 1px 0 rgba(255,255,255,0.25);}
+    .btn-download:active{box-shadow:0 1px 0 #3f1a7a,0 3px 8px rgba(91,33,182,0.3),inset 0 1px 0 rgba(255,255,255,0.25);}
+    .btn-whatsapp{background:linear-gradient(180deg,#2fdb75 0%,var(--green) 100%);color:#fff;box-shadow:0 3px 0 #12873c,0 8px 16px rgba(37,211,102,0.32),inset 0 1px 0 rgba(255,255,255,0.3);}
+    .btn-whatsapp:hover{box-shadow:0 5px 0 #12873c,0 10px 20px rgba(37,211,102,0.4),inset 0 1px 0 rgba(255,255,255,0.3);}
+    .btn-whatsapp:active{box-shadow:0 1px 0 #12873c,0 3px 8px rgba(37,211,102,0.3),inset 0 1px 0 rgba(255,255,255,0.3);}
+    .btn-email{background:linear-gradient(180deg,#ffffff 0%,#f4f3f7 100%);color:var(--text);border:1px solid var(--border);box-shadow:0 3px 0 #ded9e8,0 6px 14px rgba(30,15,58,0.08),inset 0 1px 0 #fff;}
+    .btn-email:hover{box-shadow:0 5px 0 #ded9e8,0 8px 18px rgba(30,15,58,0.1),inset 0 1px 0 #fff;}
+    .btn-email:active{box-shadow:0 1px 0 #ded9e8,0 2px 6px rgba(30,15,58,0.08),inset 0 1px 0 #fff;}
+
+    .note-box{margin-top:20px;background:var(--accent-pale);border-radius:14px;padding:16px 18px;font-size:.82rem;color:var(--text);line-height:1.6;}
+    .note-box strong{color:var(--accent);}
+
+    .ai-section{margin-top:28px;padding-top:24px;border-top:1px solid var(--border);}
+    .ai-section-head{margin-bottom:16px;}
+    .ai-badge{display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.78rem;padding:5px 14px;border-radius:100px;margin-bottom:8px;}
+    .ai-section-sub{font-size:.85rem;color:var(--text-muted);line-height:1.5;}
+    .btn-ai{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;margin-top:4px;}
+    .ai-result{margin-top:18px;border-radius:14px;overflow:hidden;border:1px solid var(--border);}
+    .ai-result img{width:100%;display:block;}
+    .ai-loading{margin-top:18px;display:flex;flex-direction:column;align-items:center;gap:12px;padding:32px 16px;color:var(--text-muted);font-size:.85rem;text-align:center;}
+    .ai-spinner{width:32px;height:32px;border:3px solid var(--accent-pale);border-top-color:var(--accent);border-radius:50%;animation:aiSpin 0.8s linear infinite;}
+    @keyframes aiSpin{to{transform:rotate(360deg);}}
+    .ai-error{margin-top:18px;background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;border-radius:12px;padding:14px 16px;font-size:.85rem;}
+    .ai-refine-row{margin-top:16px;display:flex;gap:10px;}
+    .ai-refine-row input{flex:1;padding:12px 16px;border:1px solid var(--border);border-radius:100px;font-family:'Inter',sans-serif;font-size:.85rem;}
+    .btn-ai-refine{background:var(--text);color:#fff;padding:12px 22px;flex:0 0 auto;min-width:auto;}
+
+    .lp-footer{padding:22px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+    .lp-footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1rem;color:var(--text);text-decoration:none;}
+    .lp-footer-logo span{color:var(--accent);}
+    .lp-footer p,.lp-footer a{font-size:.8rem;color:var(--text-muted);text-decoration:none;}
+
+    @media(max-width:900px){
+      .top-bar{padding:14px 20px;}
+      .page-head{padding:120px 20px 16px;}
+      main{padding:24px 20px 80px;}
+      .maker-grid{grid-template-columns:1fr;gap:28px;}
+      .lp-footer{padding:18px 20px;flex-direction:column;text-align:center;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="/" class="top-bar-logo">Merch<span>Magic</span></a>
+  <a href="/products" class="top-bar-link">← Back to Products</a>
+</div>
+
+<div class="page-head">
+  <div class="page-label">Design Studio</div>
+  <h1 class="page-title">See your logo<br><em>on our merch.</em></h1>
+  <p class="page-sub">Pick a product, upload your logo, and drag it into place. Download your mockup and send it straight to us for a free quote.</p>
+</div>
+
+<main>
+  <div class="maker-grid">
+    <div class="controls">
+      <div class="step">
+        <div class="step-label"><span class="step-num">1</span> Choose a product</div>
+        <select id="productSelect"></select>
+      </div>
+
+      <div class="step">
+        <div class="step-label"><span class="step-num">2</span> Upload your logo</div>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-text"><strong>Click to upload</strong> or drag & drop<br>PNG, JPG or SVG — transparent PNG works best</div>
+          <div class="upload-filename" id="uploadFilename"></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-label"><span class="step-num">3</span> Additional notes <span class="step-optional">(optional)</span></div>
+        <textarea id="aiNotesInput" class="notes-textarea" placeholder="e.g. make the logo larger, place it centred on the front, use a warm wood-tone background…"></textarea>
+        <p class="canvas-hint">These notes are used by the AI when generating your mockup below.</p>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <div class="canvas-stage" id="canvasStage">
+        <canvas id="mockupCanvas" width="800" height="800"></canvas>
+        <div class="canvas-placeholder" id="canvasPlaceholder">
+          <div style="font-size:2rem;">🎨</div>
+          <div>Choose a product and upload your logo<br>to see your mockup appear here</div>
+        </div>
+      </div>
+
+      <div class="ai-section">
+        <div class="ai-section-head">
+          <div class="ai-badge">✨ AI Studio</div>
+          <p class="ai-section-sub">Generate a photorealistic version with AI, then describe any changes to refine it.</p>
+        </div>
+        <button class="btn btn-ai" id="btnGenerateAi" disabled>✨ Generate AI Mockup</button>
+
+        <div class="ai-result" id="aiResult" style="display:none;">
+          <img id="aiResultImg" alt="AI-generated mockup">
+        </div>
+        <div class="ai-loading" id="aiLoading" style="display:none;">
+          <div class="ai-spinner"></div>
+          <span>Generating your mockup… this can take up to 30 seconds.</span>
+        </div>
+        <div class="ai-error" id="aiError" style="display:none;"></div>
+
+        <div class="ai-refine-row" id="aiRefineRow" style="display:none;">
+          <input type="text" id="aiRefineInput" placeholder="e.g. make the background light blue, move the logo lower…">
+          <button class="btn btn-ai-refine" id="btnRefineAi">Refine</button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-download" id="btnDownload" disabled>Download Mockup</button>
+        <a class="btn btn-whatsapp" id="btnWhatsapp" href="#" target="_blank" style="pointer-events:none;opacity:.4;">Send via WhatsApp</a>
+        <a class="btn btn-email" id="btnEmail" href="#" style="pointer-events:none;opacity:.4;">Send via Email</a>
+      </div>
+
+      <div class="note-box">
+        <strong>One quick step:</strong> WhatsApp and email can't auto-attach your image for security reasons. Click <strong>Download Mockup</strong> first, then use the buttons below to open WhatsApp or your email app with a message ready — just attach the image you downloaded before sending.
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="lp-footer">
+  <a href="/" class="lp-footer-logo">Merch<span>Magic</span></a>
+  <p>© 2026 Merch Magic. All rights reserved.</p>
+  <a href="mailto:maryam@merchmagic.uk">maryam@merchmagic.uk</a>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  var PRODUCTS = [{"slug": "pvc-keychains", "name": "Personalised PVC Keychains", "image": "keychains.png"}, {"slug": "leather-keychains", "name": "Leather Keychains", "image": "leather-keychain.png"}, {"slug": "metal-keychains", "name": "Metal Keychains", "image": "metal-keychain.png"}, {"slug": "trolley-coin-keychains", "name": "Trolley Coin Keychains", "image": "trolley-coin-keychain.png"}, {"slug": "acrylic-keychains", "name": "Acrylic Keychains", "image": "acrylic-keychain.png"}, {"slug": "wood-keychains", "name": "Wooden Keychains", "image": "wood-keychain.png"}, {"slug": "t-shirts", "name": "T-Shirts", "image": "tshirt.png"}, {"slug": "hoodies", "name": "Hoodies", "image": "hoodie.png"}, {"slug": "sweatshirts", "name": "Sweatshirts", "image": "sweatshirt.png"}, {"slug": "polo-shirts", "name": "Polo Shirts", "image": "polo.png"}, {"slug": "caps", "name": "Caps", "image": "cap.png"}, {"slug": "jackets", "name": "Jackets & Gilets", "image": "gilet.png"}, {"slug": "sportswear", "name": "Sportswear", "image": "sportswear.png"}, {"slug": "beanies", "name": "Beanies", "image": "beanie.png"}, {"slug": "workwear", "name": "Workwear & Hi-Vis", "image": "Hi-vis.png"}, {"slug": "socks", "name": "Branded Socks", "image": "socks.png"}, {"slug": "aprons", "name": "Aprons", "image": "apron.png"}, {"slug": "notebooks", "name": "Notebooks", "image": "notebook.png"}, {"slug": "calendars", "name": "Calendars", "image": "calendar.png"}, {"slug": "pens", "name": "Pens", "image": "pens.png"}, {"slug": "diaries", "name": "Diaries", "image": "diary.png"}, {"slug": "sticky-notes", "name": "Sticky Note Pads", "image": "sticky-notes.png"}, {"slug": "desk-pads", "name": "Desk Pads & Planners", "image": "desk-pad.png"}, {"slug": "folders", "name": "Folders & Portfolios", "image": "folder.png"}, {"slug": "bookmarks", "name": "Bookmarks", "image": "bookmark.png"}, {"slug": "greeting-cards", "name": "Greeting & Thank You Cards", "image": "greeting-cards.png"}, {"slug": "clipboards", "name": "Branded Clipboards", "image": "clipboard.png"}, {"slug": "mouse-pads", "name": "Mouse Mats", "image": "mouse-pad.png"}, {"slug": "water-bottles", "name": "Water Bottles", "image": "water-bottle.png"}, {"slug": "travel-mugs", "name": "Travel Mugs", "image": "travel-mug.png"}, {"slug": "tumblers", "name": "Tumblers", "image": "tumbler.png"}, {"slug": "protein-shakers", "name": "Protein Shakers", "image": "protein-shaker.png"}, {"slug": "mugs", "name": "Mugs", "image": "mug.png"}, {"slug": "stickers", "name": "Stickers", "image": "stickers.png"}, {"slug": "windshield-stickers", "name": "Windshield Stickers", "image": "windshield-sticker.png"}, {"slug": "lanyards", "name": "Lanyards", "image": "lanyards.png"}, {"slug": "badges", "name": "Badges", "image": "badges.png"}, {"slug": "magnets", "name": "Magnets", "image": "magnets.png"}, {"slug": "wristbands", "name": "Wristbands", "image": "wristbands.png"}, {"slug": "air-fresheners", "name": "Car Air Fresheners", "image": "air-freshener.png"}, {"slug": "banners", "name": "Banners & Signage", "image": "banners.png"}, {"slug": "door-hangers", "name": "Door Hangers", "image": "door-hanger.png"}, {"slug": "gift-boxes", "name": "Welcome Gift Boxes", "image": "gift-box.png"}, {"slug": "gym-towels", "name": "Gym Towels", "image": "gym-towel.png"}, {"slug": "stress-balls", "name": "Stress Balls", "image": "stress-ball.png"}, {"slug": "confectionery", "name": "Branded Confectionery", "image": "confectionery.png"}, {"slug": "roller-banners", "name": "Roller Banners", "image": "roller-banner.png"}, {"slug": "tote-bags", "name": "Tote Bags", "image": "tote.png"}, {"slug": "drawstring-bags", "name": "Drawstring Bags", "image": "drawstring-bag.png"}, {"slug": "backpacks", "name": "Backpacks", "image": "backpack.png"}, {"slug": "pouches", "name": "Pouches", "image": "pouch.png"}, {"slug": "microfibre-cloths", "name": "Microfibre Cloths", "image": "microfibre-cloth.png"}, {"slug": "number-plate-surrounds", "name": "Number Plate Surrounds", "image": "car-plate-surround.png"}, {"slug": "car-mats", "name": "Branded Car Mats", "image": "car-mats.png"}, {"slug": "umbrellas", "name": "Branded Umbrellas", "image": "umberalla.png"}, {"slug": "usb-drives", "name": "Branded USB Drives", "image": "usb-drive.png"}, {"slug": "gym-bags", "name": "Gym Duffel Bags", "image": "gym-bag.png"}, {"slug": "laptop-bags", "name": "Laptop Bags", "image": "laptop-bag.png"}, {"slug": "cool-bags", "name": "Cool Bags & Lunch Bags", "image": "cool-bag.png"}, {"slug": "power-banks", "name": "Power Banks", "image": "power-bank.png"}, {"slug": "phone-cases", "name": "Phone Cases", "image": "phone-case.png"}, {"slug": "charging-cables", "name": "Charging Cables", "image": "charging-cables.png"}, {"slug": "padel-rackets", "name": "Padel Rackets", "image": "padel-racket.png"}, {"slug": "padel-balls", "name": "Padel Balls", "image": "padel-ball.png"}, {"slug": "table-tennis-rackets", "name": "Table Tennis Rackets", "image": "table-tennis-racket.png"}, {"slug": "table-tennis-balls", "name": "Table Tennis Balls", "image": "table-tennis-ball.png"}, {"slug": "footballs", "name": "Footballs", "image": "football.png"}, {"slug": "golf-balls", "name": "Golf Balls", "image": "golf-ball.png"}, {"slug": "frisbees", "name": "Frisbees", "image": "frisbee.png"}, {"slug": "skipping-ropes", "name": "Skipping Ropes", "image": "skipping-rope.png"}, {"slug": "yoga-mats", "name": "Yoga Mats", "image": "yoga-mat.png"}];
+
+  var WHATSAPP_NUMBER = "447892734800";
+  var EMAIL_ADDRESS = "maryam@merchmagic.uk";
+
+  var productSelect = document.getElementById("productSelect");
+  var logoInput = document.getElementById("logoInput");
+  var uploadZone = document.getElementById("uploadZone");
+  var uploadFilename = document.getElementById("uploadFilename");
+  var aiNotesInput = document.getElementById("aiNotesInput");
+  var canvas = document.getElementById("mockupCanvas");
+  var ctx = canvas.getContext("2d");
+  var placeholder = document.getElementById("canvasPlaceholder");
+  var btnDownload = document.getElementById("btnDownload");
+  var btnWhatsapp = document.getElementById("btnWhatsapp");
+  var btnEmail = document.getElementById("btnEmail");
+
+  var btnGenerateAi = document.getElementById("btnGenerateAi");
+  var aiResult = document.getElementById("aiResult");
+  var aiResultImg = document.getElementById("aiResultImg");
+  var aiLoading = document.getElementById("aiLoading");
+  var aiError = document.getElementById("aiError");
+  var aiRefineRow = document.getElementById("aiRefineRow");
+  var aiRefineInput = document.getElementById("aiRefineInput");
+  var btnRefineAi = document.getElementById("btnRefineAi");
+  var currentAiImage = null;
+
+  var productImg = null;
+  var logoImg = null;
+  var logoState = { x: 0.5, y: 0.5, scale: 0.35 }; // fractions of canvas size
+  var dragging = false;
+  var dragOffset = { x: 0, y: 0 };
+  var currentProductName = "";
+
+  // populate dropdown
+  var placeholderOpt = document.createElement("option");
+  placeholderOpt.textContent = "Select a product…";
+  placeholderOpt.value = "";
+  productSelect.appendChild(placeholderOpt);
+  PRODUCTS.forEach(function (p) {
+    var opt = document.createElement("option");
+    opt.value = p.image;
+    opt.textContent = p.name;
+    opt.dataset.name = p.name;
+    productSelect.appendChild(opt);
+  });
+
+  function loadImage(src, cb) {
+    var img = new Image();
+    img.onload = function () { cb(img); };
+    img.src = src;
+  }
+
+  function render() {
+    if (!productImg) return;
+    placeholder.style.display = "none";
+    canvas.style.display = "block";
+
+    var size = canvas.width;
+    ctx.clearRect(0, 0, size, size);
+
+    // draw product image, cover-fit into square canvas
+    var pRatio = productImg.width / productImg.height;
+    var dw, dh, dx, dy;
+    if (pRatio > 1) {
+      dh = size; dw = size * pRatio;
+      dx = -(dw - size) / 2; dy = 0;
+    } else {
+      dw = size; dh = size / pRatio;
+      dx = 0; dy = -(dh - size) / 2;
+    }
+    ctx.drawImage(productImg, dx, dy, dw, dh);
+
+    if (logoImg) {
+      var logoW = size * logoState.scale;
+      var logoH = logoW * (logoImg.height / logoImg.width);
+      var logoX = logoState.x * size - logoW / 2;
+      var logoY = logoState.y * size - logoH / 2;
+
+      ctx.save();
+      ctx.shadowColor = "rgba(0,0,0,0.25)";
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 3;
+      ctx.drawImage(logoImg, logoX, logoY, logoW, logoH);
+      ctx.restore();
+    }
+
+    updateActionState();
+  }
+
+  function updateActionState() {
+    var canvasReady = !!(productImg && logoImg);
+    var shareReady = canvasReady || !!currentAiImage;
+    btnGenerateAi.disabled = !canvasReady;
+    btnDownload.disabled = !shareReady;
+    if (shareReady) {
+      btnWhatsapp.style.pointerEvents = "auto";
+      btnWhatsapp.style.opacity = "1";
+      btnEmail.style.pointerEvents = "auto";
+      btnEmail.style.opacity = "1";
+      var label = currentAiImage ? "an AI-generated mockup" : "a mockup";
+      var text = "Hi! I've created " + label + " for " + currentProductName + " with our logo — I've attached the image. Could you send us a quote?";
+      btnWhatsapp.href = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(text);
+      btnEmail.href = "mailto:" + EMAIL_ADDRESS + "?subject=" + encodeURIComponent("Mockup enquiry — " + currentProductName) + "&body=" + encodeURIComponent(text + "\n\n(Please remember to attach your downloaded mockup image before sending.)");
+    } else {
+      btnWhatsapp.style.pointerEvents = "none";
+      btnWhatsapp.style.opacity = ".4";
+      btnEmail.style.pointerEvents = "none";
+      btnEmail.style.opacity = ".4";
+    }
+  }
+
+  productSelect.addEventListener("change", function () {
+    var opt = productSelect.options[productSelect.selectedIndex];
+    if (!productSelect.value) {
+      productImg = null;
+      placeholder.style.display = "flex";
+      canvas.style.display = "none";
+      updateActionState();
+      return;
+    }
+    currentProductName = opt.dataset.name;
+    loadImage(productSelect.value, function (img) {
+      productImg = img;
+      render();
+    });
+  });
+
+  function handleLogoFile(file) {
+    if (!file) return;
+    uploadFilename.textContent = file.name;
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      loadImage(e.target.result, function (img) {
+        logoImg = img;
+        logoState.x = 0.5;
+        logoState.y = 0.5;
+        render();
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
+  logoInput.addEventListener("change", function () {
+    handleLogoFile(logoInput.files[0]);
+  });
+
+  uploadZone.addEventListener("click", function () { logoInput.click(); });
+  uploadZone.addEventListener("dragover", function (e) {
+    e.preventDefault();
+    uploadZone.classList.add("dragover");
+  });
+  uploadZone.addEventListener("dragleave", function () {
+    uploadZone.classList.remove("dragover");
+  });
+  uploadZone.addEventListener("drop", function (e) {
+    e.preventDefault();
+    uploadZone.classList.remove("dragover");
+    var file = e.dataTransfer.files[0];
+    if (file) handleLogoFile(file);
+  });
+
+  function canvasPoint(e) {
+    var rect = canvas.getBoundingClientRect();
+    var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    var clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return {
+      x: ((clientX - rect.left) / rect.width) * canvas.width,
+      y: ((clientY - rect.top) / rect.height) * canvas.height
+    };
+  }
+
+  canvas.addEventListener("pointerdown", function (e) {
+    if (!logoImg) return;
+    var pt = canvasPoint(e);
+    var size = canvas.width;
+    var logoW = size * logoState.scale;
+    var logoH = logoW * (logoImg.height / logoImg.width);
+    var logoX = logoState.x * size - logoW / 2;
+    var logoY = logoState.y * size - logoH / 2;
+    if (pt.x >= logoX && pt.x <= logoX + logoW && pt.y >= logoY && pt.y <= logoY + logoH) {
+      dragging = true;
+      canvas.classList.add("dragging");
+      dragOffset.x = pt.x - logoState.x * size;
+      dragOffset.y = pt.y - logoState.y * size;
+    }
+  });
+
+  window.addEventListener("pointermove", function (e) {
+    if (!dragging) return;
+    var pt = canvasPoint(e);
+    var size = canvas.width;
+    logoState.x = Math.min(1, Math.max(0, (pt.x - dragOffset.x) / size));
+    logoState.y = Math.min(1, Math.max(0, (pt.y - dragOffset.y) / size));
+    render();
+  });
+
+  window.addEventListener("pointerup", function () {
+    dragging = false;
+    canvas.classList.remove("dragging");
+  });
+
+  btnDownload.addEventListener("click", function () {
+    if (currentAiImage) {
+      var aiLink = document.createElement("a");
+      aiLink.href = currentAiImage;
+      aiLink.download = "merch-magic-ai-mockup.png";
+      document.body.appendChild(aiLink);
+      aiLink.click();
+      document.body.removeChild(aiLink);
+      return;
+    }
+    canvas.toBlob(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "merch-magic-mockup.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    }, "image/png");
+  });
+
+  /* ── AI Studio ── */
+  function showAiError(message) {
+    aiError.textContent = message;
+    aiError.style.display = "block";
+  }
+
+  function setAiLoading(isLoading) {
+    aiLoading.style.display = isLoading ? "flex" : "none";
+    btnGenerateAi.disabled = isLoading || !(productImg && logoImg);
+    btnRefineAi.disabled = isLoading;
+  }
+
+  function showAiResult(dataUrl) {
+    currentAiImage = dataUrl;
+    aiResultImg.src = dataUrl;
+    aiResult.style.display = "block";
+    aiRefineRow.style.display = "flex";
+    updateActionState();
+  }
+
+  async function callGenerateApi(payload) {
+    var res = await fetch("/api/generate-mockup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    var data = await res.json().catch(function () { return {}; });
+    if (!res.ok) {
+      throw new Error(data.error || "Something went wrong generating the mockup.");
+    }
+    return data.image;
+  }
+
+  btnGenerateAi.addEventListener("click", function () {
+    if (!productImg || !logoImg) return;
+    aiError.style.display = "none";
+    setAiLoading(true);
+    callGenerateApi({ logoDataUrl: logoImg.src, productImage: productSelect.value, prompt: aiNotesInput.value.trim() })
+      .then(function (image) {
+        showAiResult(image);
+      })
+      .catch(function (err) {
+        showAiError(err.message);
+      })
+      .finally(function () {
+        setAiLoading(false);
+      });
+  });
+
+  btnRefineAi.addEventListener("click", function () {
+    var prompt = aiRefineInput.value.trim();
+    if (!prompt) {
+      showAiError("Type what you'd like changed first.");
+      return;
+    }
+    if (!currentAiImage) return;
+    aiError.style.display = "none";
+    setAiLoading(true);
+    callGenerateApi({ baseImageDataUrl: currentAiImage, prompt: prompt })
+      .then(function (image) {
+        showAiResult(image);
+        aiRefineInput.value = "";
+      })
+      .catch(function (err) {
+        showAiError(err.message);
+      })
+      .finally(function () {
+        setAiLoading(false);
+      });
+  });
+
+  aiRefineInput.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") btnRefineAi.click();
+  });
+
+  updateActionState();
+})();
+</script>
+
+</body>
+</html>
