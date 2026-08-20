@@ -60,7 +60,15 @@
     .step-label{display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:14px;}
     .step-num{width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;}
 
-    select{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:#fff;font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text);cursor:pointer;}
+    .product-picker{position:relative;}
+    .product-search-input{width:100%;padding:14px 16px;border:1px solid var(--border);border-radius:12px;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a3ad' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E") no-repeat right 16px center;background-size:18px;padding-right:44px;font-family:'Inter',sans-serif;font-size:.9rem;color:var(--text);}
+    .product-search-input:focus{outline:none;border-color:var(--accent);}
+    .product-dropdown{display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;max-height:340px;overflow-y:auto;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 12px 32px rgba(30,15,58,0.14);z-index:50;padding:6px;}
+    .product-dropdown.open{display:block;}
+    .product-cat-label{font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;padding:10px 12px 4px;}
+    .product-option{display:block;width:100%;text-align:left;padding:10px 12px;border-radius:8px;border:none;background:none;font-family:'Inter',sans-serif;font-size:.85rem;color:var(--text);cursor:pointer;}
+    .product-option:hover, .product-option.active{background:var(--accent-pale);color:var(--accent);}
+    .product-empty{padding:20px 12px;text-align:center;font-size:.85rem;color:var(--text-muted);}
 
     .upload-zone{border:2px dashed var(--border);border-radius:14px;padding:28px 16px;text-align:center;cursor:pointer;background:#fff;transition:border-color .2s,background .2s;}
     .upload-zone:hover, .upload-zone.dragover{border-color:var(--accent);background:var(--accent-pale);}
@@ -176,7 +184,10 @@
     <div class="controls">
       <div class="step">
         <div class="step-label"><span class="step-num">1</span> Choose a product</div>
-        <select id="productSelect"></select>
+        <div class="product-picker" id="productPicker">
+          <input type="text" id="productSearchInput" class="product-search-input" placeholder="Search or select a product…" autocomplete="off">
+          <div class="product-dropdown" id="productDropdown"></div>
+        </div>
       </div>
 
       <div class="step">
@@ -247,12 +258,25 @@
 (function () {
   "use strict";
 
-  var PRODUCTS = [{"slug": "pvc-keychains", "name": "Personalised PVC Keychains", "image": "keychains.png"}, {"slug": "leather-keychains", "name": "Leather Keychains", "image": "leather-keychain.png"}, {"slug": "metal-keychains", "name": "Metal Keychains", "image": "metal-keychain.png"}, {"slug": "trolley-coin-keychains", "name": "Trolley Coin Keychains", "image": "trolley-coin-keychain.png"}, {"slug": "acrylic-keychains", "name": "Acrylic Keychains", "image": "acrylic-keychain.png"}, {"slug": "wood-keychains", "name": "Wooden Keychains", "image": "wood-keychain.png"}, {"slug": "t-shirts", "name": "T-Shirts", "image": "tshirt.png"}, {"slug": "hoodies", "name": "Hoodies", "image": "hoodie.png"}, {"slug": "sweatshirts", "name": "Sweatshirts", "image": "sweatshirt.png"}, {"slug": "polo-shirts", "name": "Polo Shirts", "image": "polo.png"}, {"slug": "caps", "name": "Caps", "image": "cap.png"}, {"slug": "jackets", "name": "Jackets & Gilets", "image": "gilet.png"}, {"slug": "sportswear", "name": "Sportswear", "image": "sportswear.png"}, {"slug": "beanies", "name": "Beanies", "image": "beanie.png"}, {"slug": "workwear", "name": "Workwear & Hi-Vis", "image": "Hi-vis.png"}, {"slug": "socks", "name": "Branded Socks", "image": "socks.png"}, {"slug": "aprons", "name": "Aprons", "image": "apron.png"}, {"slug": "notebooks", "name": "Notebooks", "image": "notebook.png"}, {"slug": "calendars", "name": "Calendars", "image": "calendar.png"}, {"slug": "pens", "name": "Pens", "image": "pens.png"}, {"slug": "diaries", "name": "Diaries", "image": "diary.png"}, {"slug": "sticky-notes", "name": "Sticky Note Pads", "image": "sticky-notes.png"}, {"slug": "desk-pads", "name": "Desk Pads & Planners", "image": "desk-pad.png"}, {"slug": "folders", "name": "Folders & Portfolios", "image": "folder.png"}, {"slug": "bookmarks", "name": "Bookmarks", "image": "bookmark.png"}, {"slug": "greeting-cards", "name": "Greeting & Thank You Cards", "image": "greeting-cards.png"}, {"slug": "clipboards", "name": "Branded Clipboards", "image": "clipboard.png"}, {"slug": "mouse-pads", "name": "Mouse Mats", "image": "mouse-pad.png"}, {"slug": "water-bottles", "name": "Water Bottles", "image": "water-bottle.png"}, {"slug": "travel-mugs", "name": "Travel Mugs", "image": "travel-mug.png"}, {"slug": "tumblers", "name": "Tumblers", "image": "tumbler.png"}, {"slug": "protein-shakers", "name": "Protein Shakers", "image": "protein-shaker.png"}, {"slug": "mugs", "name": "Mugs", "image": "mug.png"}, {"slug": "stickers", "name": "Stickers", "image": "stickers.png"}, {"slug": "windshield-stickers", "name": "Windshield Stickers", "image": "windshield-sticker.png"}, {"slug": "lanyards", "name": "Lanyards", "image": "lanyards.png"}, {"slug": "badges", "name": "Badges", "image": "badges.png"}, {"slug": "magnets", "name": "Magnets", "image": "magnets.png"}, {"slug": "wristbands", "name": "Wristbands", "image": "wristbands.png"}, {"slug": "air-fresheners", "name": "Car Air Fresheners", "image": "air-freshener.png"}, {"slug": "banners", "name": "Banners & Signage", "image": "banners.png"}, {"slug": "door-hangers", "name": "Door Hangers", "image": "door-hanger.png"}, {"slug": "gift-boxes", "name": "Welcome Gift Boxes", "image": "gift-box.png"}, {"slug": "gym-towels", "name": "Gym Towels", "image": "gym-towel.png"}, {"slug": "stress-balls", "name": "Stress Balls", "image": "stress-ball.png"}, {"slug": "confectionery", "name": "Branded Confectionery", "image": "confectionery.png"}, {"slug": "roller-banners", "name": "Roller Banners", "image": "roller-banner.png"}, {"slug": "tote-bags", "name": "Tote Bags", "image": "tote.png"}, {"slug": "drawstring-bags", "name": "Drawstring Bags", "image": "drawstring-bag.png"}, {"slug": "backpacks", "name": "Backpacks", "image": "backpack.png"}, {"slug": "pouches", "name": "Pouches", "image": "pouch.png"}, {"slug": "microfibre-cloths", "name": "Microfibre Cloths", "image": "microfibre-cloth.png"}, {"slug": "number-plate-surrounds", "name": "Number Plate Surrounds", "image": "car-plate-surround.png"}, {"slug": "car-mats", "name": "Branded Car Mats", "image": "car-mats.png"}, {"slug": "umbrellas", "name": "Branded Umbrellas", "image": "umberalla.png"}, {"slug": "usb-drives", "name": "Branded USB Drives", "image": "usb-drive.png"}, {"slug": "gym-bags", "name": "Gym Duffel Bags", "image": "gym-bag.png"}, {"slug": "laptop-bags", "name": "Laptop Bags", "image": "laptop-bag.png"}, {"slug": "cool-bags", "name": "Cool Bags & Lunch Bags", "image": "cool-bag.png"}, {"slug": "power-banks", "name": "Power Banks", "image": "power-bank.png"}, {"slug": "phone-cases", "name": "Phone Cases", "image": "phone-case.png"}, {"slug": "charging-cables", "name": "Charging Cables", "image": "charging-cables.png"}, {"slug": "padel-rackets", "name": "Padel Rackets", "image": "padel-racket.png"}, {"slug": "padel-balls", "name": "Padel Balls", "image": "padel-ball.png"}, {"slug": "table-tennis-rackets", "name": "Table Tennis Rackets", "image": "table-tennis-racket.png"}, {"slug": "table-tennis-balls", "name": "Table Tennis Balls", "image": "table-tennis-ball.png"}, {"slug": "footballs", "name": "Footballs", "image": "football.png"}, {"slug": "golf-balls", "name": "Golf Balls", "image": "golf-ball.png"}, {"slug": "frisbees", "name": "Frisbees", "image": "frisbee.png"}, {"slug": "skipping-ropes", "name": "Skipping Ropes", "image": "skipping-rope.png"}, {"slug": "yoga-mats", "name": "Yoga Mats", "image": "yoga-mat.png"}];
+  var PRODUCTS = [{"slug": "pvc-keychains", "name": "Personalised PVC Keychains", "image": "keychains.png", "category": "keychains"}, {"slug": "leather-keychains", "name": "Leather Keychains", "image": "leather-keychain.png", "category": "keychains"}, {"slug": "metal-keychains", "name": "Metal Keychains", "image": "metal-keychain.png", "category": "keychains"}, {"slug": "trolley-coin-keychains", "name": "Trolley Coin Keychains", "image": "trolley-coin-keychain.png", "category": "keychains"}, {"slug": "acrylic-keychains", "name": "Acrylic Keychains", "image": "acrylic-keychain.png", "category": "keychains"}, {"slug": "wood-keychains", "name": "Wooden Keychains", "image": "wood-keychain.png", "category": "keychains"}, {"slug": "t-shirts", "name": "T-Shirts", "image": "tshirt.png", "category": "apparel"}, {"slug": "hoodies", "name": "Hoodies", "image": "hoodie.png", "category": "apparel"}, {"slug": "sweatshirts", "name": "Sweatshirts", "image": "sweatshirt.png", "category": "apparel"}, {"slug": "polo-shirts", "name": "Polo Shirts", "image": "polo.png", "category": "apparel"}, {"slug": "caps", "name": "Caps", "image": "cap.png", "category": "apparel"}, {"slug": "jackets", "name": "Jackets & Gilets", "image": "gilet.png", "category": "apparel"}, {"slug": "sportswear", "name": "Sportswear", "image": "sportswear.png", "category": "apparel"}, {"slug": "beanies", "name": "Beanies", "image": "beanie.png", "category": "apparel"}, {"slug": "workwear", "name": "Workwear & Hi-Vis", "image": "Hi-vis.png", "category": "apparel"}, {"slug": "socks", "name": "Branded Socks", "image": "socks.png", "category": "apparel"}, {"slug": "aprons", "name": "Aprons", "image": "apron.png", "category": "apparel"}, {"slug": "notebooks", "name": "Notebooks", "image": "notebook.png", "category": "stationery"}, {"slug": "calendars", "name": "Calendars", "image": "calendar.png", "category": "stationery"}, {"slug": "pens", "name": "Pens", "image": "pens.png", "category": "stationery"}, {"slug": "diaries", "name": "Diaries", "image": "diary.png", "category": "stationery"}, {"slug": "sticky-notes", "name": "Sticky Note Pads", "image": "sticky-notes.png", "category": "stationery"}, {"slug": "desk-pads", "name": "Desk Pads & Planners", "image": "desk-pad.png", "category": "stationery"}, {"slug": "folders", "name": "Folders & Portfolios", "image": "folder.png", "category": "stationery"}, {"slug": "bookmarks", "name": "Bookmarks", "image": "bookmark.png", "category": "stationery"}, {"slug": "greeting-cards", "name": "Greeting & Thank You Cards", "image": "greeting-cards.png", "category": "stationery"}, {"slug": "clipboards", "name": "Branded Clipboards", "image": "clipboard.png", "category": "stationery"}, {"slug": "mouse-pads", "name": "Mouse Mats", "image": "mouse-pad.png", "category": "stationery"}, {"slug": "water-bottles", "name": "Water Bottles", "image": "water-bottle.png", "category": "drinkware"}, {"slug": "travel-mugs", "name": "Travel Mugs", "image": "travel-mug.png", "category": "drinkware"}, {"slug": "tumblers", "name": "Tumblers", "image": "tumbler.png", "category": "drinkware"}, {"slug": "protein-shakers", "name": "Protein Shakers", "image": "protein-shaker.png", "category": "drinkware"}, {"slug": "mugs", "name": "Mugs", "image": "mug.png", "category": "drinkware"}, {"slug": "stickers", "name": "Stickers", "image": "stickers.png", "category": "event"}, {"slug": "windshield-stickers", "name": "Windshield Stickers", "image": "windshield-sticker.png", "category": "event"}, {"slug": "lanyards", "name": "Lanyards", "image": "lanyards.png", "category": "event"}, {"slug": "badges", "name": "Badges", "image": "badges.png", "category": "event"}, {"slug": "magnets", "name": "Magnets", "image": "magnets.png", "category": "event"}, {"slug": "wristbands", "name": "Wristbands", "image": "wristbands.png", "category": "event"}, {"slug": "air-fresheners", "name": "Car Air Fresheners", "image": "air-freshener.png", "category": "event"}, {"slug": "banners", "name": "Banners & Signage", "image": "banners.png", "category": "event"}, {"slug": "door-hangers", "name": "Door Hangers", "image": "door-hanger.png", "category": "event"}, {"slug": "gift-boxes", "name": "Welcome Gift Boxes", "image": "gift-box.png", "category": "event"}, {"slug": "gym-towels", "name": "Gym Towels", "image": "gym-towel.png", "category": "event"}, {"slug": "stress-balls", "name": "Stress Balls", "image": "stress-ball.png", "category": "event"}, {"slug": "confectionery", "name": "Branded Confectionery", "image": "confectionery.png", "category": "event"}, {"slug": "roller-banners", "name": "Roller Banners", "image": "roller-banner.png", "category": "event"}, {"slug": "tote-bags", "name": "Tote Bags", "image": "tote.png", "category": "bags"}, {"slug": "drawstring-bags", "name": "Drawstring Bags", "image": "drawstring-bag.png", "category": "bags"}, {"slug": "backpacks", "name": "Backpacks", "image": "backpack.png", "category": "bags"}, {"slug": "pouches", "name": "Pouches", "image": "pouch.png", "category": "bags"}, {"slug": "microfibre-cloths", "name": "Microfibre Cloths", "image": "microfibre-cloth.png", "category": "bags"}, {"slug": "number-plate-surrounds", "name": "Number Plate Surrounds", "image": "car-plate-surround.png", "category": "bags"}, {"slug": "car-mats", "name": "Branded Car Mats", "image": "car-mats.png", "category": "bags"}, {"slug": "umbrellas", "name": "Branded Umbrellas", "image": "umberalla.png", "category": "bags"}, {"slug": "usb-drives", "name": "Branded USB Drives", "image": "usb-drive.png", "category": "bags"}, {"slug": "gym-bags", "name": "Gym Duffel Bags", "image": "gym-bag.png", "category": "bags"}, {"slug": "laptop-bags", "name": "Laptop Bags", "image": "laptop-bag.png", "category": "bags"}, {"slug": "cool-bags", "name": "Cool Bags & Lunch Bags", "image": "cool-bag.png", "category": "bags"}, {"slug": "power-banks", "name": "Power Banks", "image": "power-bank.png", "category": "tech"}, {"slug": "phone-cases", "name": "Phone Cases", "image": "phone-case.png", "category": "tech"}, {"slug": "charging-cables", "name": "Charging Cables", "image": "charging-cables.png", "category": "tech"}, {"slug": "padel-rackets", "name": "Padel Rackets", "image": "padel-racket.png", "category": "sports"}, {"slug": "padel-balls", "name": "Padel Balls", "image": "padel-ball.png", "category": "sports"}, {"slug": "table-tennis-rackets", "name": "Table Tennis Rackets", "image": "table-tennis-racket.png", "category": "sports"}, {"slug": "table-tennis-balls", "name": "Table Tennis Balls", "image": "table-tennis-ball.png", "category": "sports"}, {"slug": "footballs", "name": "Footballs", "image": "football.png", "category": "sports"}, {"slug": "golf-balls", "name": "Golf Balls", "image": "golf-ball.png", "category": "sports"}, {"slug": "frisbees", "name": "Frisbees", "image": "frisbee.png", "category": "sports"}, {"slug": "skipping-ropes", "name": "Skipping Ropes", "image": "skipping-rope.png", "category": "sports"}, {"slug": "yoga-mats", "name": "Yoga Mats", "image": "yoga-mat.png", "category": "sports"}];
 
   var WHATSAPP_NUMBER = "447892734800";
   var EMAIL_ADDRESS = "maryam@merchmagic.uk";
 
-  var productSelect = document.getElementById("productSelect");
+  var CATEGORIES = [
+    { key: "keychains", label: "Keychains" },
+    { key: "apparel", label: "Apparel" },
+    { key: "stationery", label: "Stationery" },
+    { key: "drinkware", label: "Drinkware" },
+    { key: "event", label: "Event & Promotional Products" },
+    { key: "bags", label: "Bags & Accessories" },
+    { key: "tech", label: "Tech & Accessories" },
+    { key: "sports", label: "Sports & Leisure" }
+  ];
+
+  var productPicker = document.getElementById("productPicker");
+  var productSearchInput = document.getElementById("productSearchInput");
+  var productDropdown = document.getElementById("productDropdown");
   var logoInput = document.getElementById("logoInput");
   var uploadZone = document.getElementById("uploadZone");
   var uploadFilename = document.getElementById("uploadFilename");
@@ -272,20 +296,79 @@
   var currentAiImage = null;
 
   var productSelected = false;
+  var selectedProductImage = null;
   var logoDataUrl = null;
   var currentProductName = "";
 
-  // populate dropdown
-  var placeholderOpt = document.createElement("option");
-  placeholderOpt.textContent = "Select a product…";
-  placeholderOpt.value = "";
-  productSelect.appendChild(placeholderOpt);
-  PRODUCTS.forEach(function (p) {
-    var opt = document.createElement("option");
-    opt.value = p.image;
-    opt.textContent = p.name;
-    opt.dataset.name = p.name;
-    productSelect.appendChild(opt);
+  function renderProductDropdown(query) {
+    var q = (query || "").trim().toLowerCase();
+    productDropdown.innerHTML = "";
+    var anyMatch = false;
+
+    CATEGORIES.forEach(function (cat) {
+      var matches = PRODUCTS.filter(function (p) {
+        return p.category === cat.key && p.name.toLowerCase().indexOf(q) !== -1;
+      });
+      if (!matches.length) return;
+      anyMatch = true;
+
+      var label = document.createElement("div");
+      label.className = "product-cat-label";
+      label.textContent = cat.label;
+      productDropdown.appendChild(label);
+
+      matches.forEach(function (p) {
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "product-option";
+        btn.textContent = p.name;
+        btn.addEventListener("click", function () {
+          selectProduct(p);
+        });
+        productDropdown.appendChild(btn);
+      });
+    });
+
+    if (!anyMatch) {
+      var empty = document.createElement("div");
+      empty.className = "product-empty";
+      empty.textContent = "No products match your search.";
+      productDropdown.appendChild(empty);
+    }
+  }
+
+  function openDropdown() {
+    renderProductDropdown(productSearchInput.value);
+    productDropdown.classList.add("open");
+  }
+
+  function closeDropdown() {
+    productDropdown.classList.remove("open");
+  }
+
+  function selectProduct(p) {
+    currentAiImage = null;
+    currentProductName = p.name;
+    selectedProductImage = p.image;
+    productSelected = true;
+    productSearchInput.value = p.name;
+    previewImg.src = p.image;
+    previewImg.style.display = "block";
+    placeholder.style.display = "none";
+    closeDropdown();
+    updateActionState();
+  }
+
+  productSearchInput.addEventListener("focus", openDropdown);
+  productSearchInput.addEventListener("input", openDropdown);
+  productSearchInput.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeDropdown();
+      productSearchInput.blur();
+    }
+  });
+  document.addEventListener("click", function (e) {
+    if (!productPicker.contains(e.target)) closeDropdown();
   });
 
   function updateActionState() {
@@ -308,26 +391,6 @@
       btnEmail.style.opacity = ".4";
     }
   }
-
-  productSelect.addEventListener("change", function () {
-    var opt = productSelect.options[productSelect.selectedIndex];
-    currentAiImage = null;
-    if (!productSelect.value) {
-      productSelected = false;
-      currentProductName = "";
-      previewImg.style.display = "none";
-      previewImg.removeAttribute("src");
-      placeholder.style.display = "flex";
-      updateActionState();
-      return;
-    }
-    currentProductName = opt.dataset.name;
-    productSelected = true;
-    previewImg.src = productSelect.value;
-    previewImg.style.display = "block";
-    placeholder.style.display = "none";
-    updateActionState();
-  });
 
   function handleLogoFile(file) {
     if (!file) return;
@@ -407,7 +470,7 @@
     if (!productSelected || !logoDataUrl) return;
     aiError.style.display = "none";
     setAiLoading(true);
-    callGenerateApi({ logoDataUrl: logoDataUrl, productImage: productSelect.value, prompt: aiNotesInput.value.trim() })
+    callGenerateApi({ logoDataUrl: logoDataUrl, productImage: selectedProductImage, prompt: aiNotesInput.value.trim() })
       .then(function (image) {
         showAiResult(image);
       })
