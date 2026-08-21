@@ -83,7 +83,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await client.images.edit({
-      model: "gpt-image-1-mini",
+      model: "gpt-image-1",
       image: images,
       prompt: finalPrompt,
       size: "1024x1024",
