@@ -27,7 +27,7 @@
     .top-bar{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(248,248,246,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;justify-content:space-between;}
     .top-bar-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.25rem;color:var(--text);text-decoration:none;}
     .top-bar-logo span{color:var(--accent);}
-    .top-bar-trust{font-size:.8rem;color:var(--text-muted);}
+    .top-bar-trust{font-size:.8rem;color:var(--text-muted);}.breadcrumb-back{display:flex;width:fit-content;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--text-muted);text-decoration:none;margin-bottom:14px;transition:color .2s;}.breadcrumb-back:hover{color:var(--accent);}
     .top-bar-trust strong{color:var(--text);}
     .btn-wa{display:inline-flex;align-items:center;gap:8px;font-size:.875rem;font-weight:700;color:#fff;text-decoration:none;padding:10px 22px;background:#25D366;border-radius:100px;transition:opacity .2s,transform .2s;white-space:nowrap;box-shadow:0 4px 14px rgba(37,211,102,0.35);}
     .btn-wa:hover{opacity:.92;transform:translateY(-1px);}
@@ -131,6 +131,7 @@
 </div>
 <section class="hero">
   <div class="hero-left">
+    <a href="/products" class="breadcrumb-back">← All Products</a>
     <div class="hero-badge"><span class="hero-badge-dot"></span>Keychains · UK</div>
     <h1 class="hero-title">Sculptural Detail.<br><em>Standout Quality.</em></h1>
     <p class="hero-sub">3D PVC keychains with raised and recessed elements that give your design real depth and texture. A premium feel that sets your brand apart — with no minimum order.</p>
