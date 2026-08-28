@@ -58,6 +58,8 @@
     .why-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
     .why-features{display:flex;flex-direction:column;gap:24px;margin-top:32px;}
     .why-feature{display:flex;gap:16px;align-items:flex-start;}
+.choose-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:36px;}
+@media(max-width:900px){.choose-grid{grid-template-columns:1fr;}}
     .why-icon{width:44px;height:44px;border-radius:12px;background:var(--accent-pale);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
     .why-feature h3{font-family:'Space Grotesk',sans-serif;font-size:.95rem;font-weight:800;margin-bottom:4px;}
     .why-feature p{font-size:.875rem;color:var(--text-muted);line-height:1.6;}
@@ -133,7 +135,7 @@
   <div class="hero-left">
     <div class="hero-badge"><span class="hero-badge-dot"></span>Sports & Leisure · UK</div>
     <h1 class="hero-title">Branded Golf Balls<br><em>Your Logo, Every Round.</em></h1>
-    <p class="hero-sub">Custom printed golf balls — a classic corporate gift for client days, tournaments and sponsorships that keeps your brand in play.</p>
+    <p class="hero-sub">Custom printed golf balls are one of the few corporate gifts that get used rather than filed in a drawer. Whether you're stocking a charity golf day, thanking clients after a tournament, or putting your name on a sponsored hole, a branded ball puts your logo in someone's hand at the moment they're most relaxed — and most receptive.</p>
   </div>
   <div class="hero-right">
     <div class="hero-img-wrap">
@@ -198,6 +200,61 @@
     </div>
     <div class="why-img">
       <img src="golf-ball.png" alt="Branded Golf Balls">
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-label">Choosing Your Ball</div>
+  <h2 class="section-title">Three grades.<br><em>One for every occasion.</em></h2>
+  <p class="section-sub">Not every golf day needs the same ball. Here's how our three grades tend to get used.</p>
+  <div class="choose-grid">
+    <div class="why-feature">
+      <div class="why-icon">⛳</div>
+      <div>
+        <h3>2-Piece</h3>
+        <p>The practical choice for volume. Durable, straight-flying and the best value when you're filling goody bags for a full field.</p>
+      </div>
+    </div>
+    <div class="why-feature">
+      <div class="why-icon">🎯</div>
+      <div>
+        <h3>3-Piece</h3>
+        <p>A noticeable step up in feel and control. Suited to client gifts where the recipient plays regularly and will judge the ball on merit.</p>
+      </div>
+    </div>
+    <div class="why-feature">
+      <div class="why-icon">🏆</div>
+      <div>
+        <h3>Tour-Grade</h3>
+        <p>For occasions where the gift itself is the statement — key accounts, headline sponsorships and prize tables.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-top:64px;">Where They Work Best</div>
+  <h2 class="section-title">Put your logo<br><em>where it gets seen.</em></h2>
+  <div class="choose-grid">
+    <div class="why-feature">
+      <div class="why-icon">🚩</div>
+      <div>
+        <h3>Charity &amp; Corporate Golf Days</h3>
+        <p>Sleeves of branded balls in every goody bag — a gift that gets used on the day rather than taken home and forgotten.</p>
+      </div>
+    </div>
+    <div class="why-feature">
+      <div class="why-icon">📣</div>
+      <div>
+        <h3>Sponsorship Activation</h3>
+        <p>Your logo on the tee box and in play. Branded balls keep your name visible for the whole round, not just the photo.</p>
+      </div>
+    </div>
+    <div class="why-feature">
+      <div class="why-icon">🎁</div>
+      <div>
+        <h3>Client Gifting</h3>
+        <p>A presentation box of tour-grade balls carries more weight with a golfer than another bottle of wine.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -276,6 +333,20 @@
         <span class="faq-icon">+</span>
       </button>
       <div class="faq-a">2-piece, 3-piece and tour-grade options to suit any budget.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Can I order different ball grades in one order?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">Yes — mix 2-piece for the field with tour-grade for the prize table. There's no minimum per grade, so you can split an order however suits the day.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        Will my logo affect how the ball plays?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">No. The print sits within the ball's cover, so it doesn't change flight, feel or distance in any way a player would notice.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">
@@ -451,7 +522,7 @@
       "name": "Can they be sold in branded sleeves or boxes?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes \u2014 branded sleeves and presentation boxes are available to match."
+        "text": "Yes — branded sleeves and presentation boxes are available to match."
       }
     },
     {
@@ -459,7 +530,7 @@
       "name": "How long does production take?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "5\u20137 business days from artwork approval."
+        "text": "5–7 business days from artwork approval."
       }
     },
     {
@@ -475,7 +546,23 @@
       "name": "How long does delivery take?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Standard turnaround is 5\u20137 business days from artwork approval. Rush orders (2\u20134 days) are available \u2014 just ask when you get in touch."
+        "text": "Standard turnaround is 5–7 business days from artwork approval. Rush orders (2–4 days) are available — just ask when you get in touch."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I order different ball grades in one order?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — mix 2-piece for the field with tour-grade for the prize table. There's no minimum per grade, so you can split an order however suits the day."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will my logo affect how the ball plays?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The print sits within the ball's cover, so it doesn't change flight, feel or distance in any way a player would notice."
       }
     }
   ]
