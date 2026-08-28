@@ -162,6 +162,38 @@
     .filter-btn.featured-btn { border-color: var(--accent-light); color: var(--accent); }
     .filter-btn.featured-btn.active { background: var(--accent); }
 
+    /* ── PRODUCT SEARCH ── */
+    .product-search-wrap {
+      max-width: 480px; margin: 0 auto 20px; position: relative;
+    }
+    .product-search {
+      width: 100%; padding: 13px 44px 13px 44px;
+      border: 1px solid var(--border); border-radius: 100px;
+      background: #fff; font-family: 'Inter', sans-serif;
+      font-size: .9rem; color: var(--text);
+    }
+    .product-search:focus { outline: none; border-color: var(--accent); }
+    .product-search-icon {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      width: 17px; height: 17px; opacity: .4; pointer-events: none;
+    }
+    .product-search-clear {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      display: none; align-items: center; justify-content: center;
+      width: 24px; height: 24px; border: none; border-radius: 50%;
+      background: rgba(30,15,58,.08); color: var(--text-muted);
+      font-size: 1rem; line-height: 1; cursor: pointer;
+    }
+    .product-search-clear:hover { background: rgba(30,15,58,.16); color: var(--text); }
+    .search-count {
+      text-align: center; font-size: .8rem; color: var(--text-muted);
+      margin: -8px 0 18px; min-height: 1em;
+    }
+    .no-results {
+      display: none; text-align: center; padding: 50px 20px; color: var(--text-muted);
+    }
+    .no-results strong { color: var(--text); }
+
     /* ── PRODUCTS SECTION ── */
     .products-section { padding: 60px 40px 100px; }
 
@@ -428,6 +460,14 @@
   <p class="page-header-sub">Browse our full range of custom branded merchandise. No minimums, free design support, and 5–7 day turnaround on everything.</p>
 </div>
 
+<!-- PRODUCT SEARCH -->
+<div class="product-search-wrap">
+  <svg class="product-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  <input type="text" id="productSearch" class="product-search" placeholder="Search 71 products — try &quot;mug&quot;, &quot;hoodie&quot;, &quot;keychain&quot;…" autocomplete="off" aria-label="Search products">
+  <button type="button" class="product-search-clear" id="productSearchClear" aria-label="Clear search">&times;</button>
+</div>
+<div class="search-count" id="searchCount"></div>
+
 <!-- FILTER BAR -->
 <div class="filter-bar">
   <button class="filter-btn featured-btn active" onclick="filterProducts('all', this)">All Products</button>
@@ -443,6 +483,12 @@
 
 <!-- PRODUCTS -->
 <div class="products-section">
+
+  <div class="no-results" id="noResults">
+    <div style="font-size:2rem;margin-bottom:10px;">🔍</div>
+    <p>No products match <strong id="noResultsTerm"></strong>.<br>Try a different word, or ask us — we source beyond what's listed.</p>
+  </div>
+
 
   <!-- ★ KEYCHAINS FEATURED ★ -->
   <div class="featured-section" data-section="keychains">
@@ -1215,6 +1261,17 @@
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
 
+    // picking a category clears any active search
+    var si = document.getElementById('productSearch');
+    if (si && si.value) { si.value = ''; }
+    document.querySelectorAll('.product-card').forEach(c => c.style.display = '');
+    var clr = document.getElementById('productSearchClear');
+    if (clr) clr.style.display = 'none';
+    var sc = document.getElementById('searchCount');
+    if (sc) sc.textContent = '';
+    var nr = document.getElementById('noResults');
+    if (nr) nr.style.display = 'none';
+
     const sections = document.querySelectorAll('[data-section]');
 
     if (cat === 'all') {
@@ -1227,6 +1284,70 @@
 
     window.scrollTo({ top: document.querySelector('.filter-bar').offsetTop - 10, behavior: 'smooth' });
   }
+
+  /* ── Product search ── */
+  (function () {
+    var input = document.getElementById('productSearch');
+    var clearBtn = document.getElementById('productSearchClear');
+    var countEl = document.getElementById('searchCount');
+    var noRes = document.getElementById('noResults');
+    var noResTerm = document.getElementById('noResultsTerm');
+    if (!input) return;
+
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.product-card'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('[data-section]'));
+
+    // cache each card's searchable text once
+    cards.forEach(function (c) {
+      var nameEl = c.querySelector('.product-name');
+      c.dataset.search = ((nameEl ? nameEl.textContent : '') + ' ' + (c.dataset.cat || '')).toLowerCase();
+    });
+
+    function reset() {
+      cards.forEach(function (c) { c.style.display = ''; });
+      sections.forEach(function (s) { s.style.display = ''; });
+      noRes.style.display = 'none';
+      countEl.textContent = '';
+      clearBtn.style.display = 'none';
+      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+      var first = document.querySelector('.filter-btn');
+      if (first) first.classList.add('active');
+    }
+
+    function run() {
+      var q = input.value.trim().toLowerCase();
+      clearBtn.style.display = q ? 'flex' : 'none';
+
+      if (!q) { reset(); return; }
+
+      // search is global, so drop any category selection
+      document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
+
+      var total = 0;
+      sections.forEach(function (section) {
+        var visible = 0;
+        section.querySelectorAll('.product-card').forEach(function (card) {
+          var hit = card.dataset.search.indexOf(q) !== -1;
+          card.style.display = hit ? '' : 'none';
+          if (hit) visible++;
+        });
+        section.style.display = visible ? '' : 'none';
+        total += visible;
+      });
+
+      noRes.style.display = total ? 'none' : 'block';
+      if (!total && noResTerm) noResTerm.textContent = '"' + input.value.trim() + '"';
+      countEl.textContent = total
+        ? total + ' product' + (total === 1 ? '' : 's') + ' matching "' + input.value.trim() + '"'
+        : '';
+    }
+
+    input.addEventListener('input', run);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { input.value = ''; run(); input.blur(); }
+    });
+    clearBtn.addEventListener('click', function () { input.value = ''; run(); input.focus(); });
+  })();
 
   // Nav shrink
   const nav = document.querySelector('nav');
