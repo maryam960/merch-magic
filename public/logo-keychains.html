@@ -119,6 +119,15 @@
       .final-cta{padding:60px 24px;}
       .lp-footer{padding:18px 24px;flex-direction:column;text-align:center;}
     }
+      .related-section{padding:70px 40px;background:var(--bg2, #f0f0ee);}
+    .related-head{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.5rem;margin-bottom:6px;text-align:center;}
+    .related-sub{font-size:.9rem;color:var(--text-muted);text-align:center;margin-bottom:30px;}
+    .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto;}
+    .related-card{display:block;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s;}
+    .related-card:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 10px 24px rgba(30,15,58,.10);}
+    .related-card img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;}
+    .related-card span{display:block;padding:12px 14px;font-size:.85rem;font-weight:600;color:var(--text);}
+    @media (max-width:900px){.related-section{padding:50px 24px;}.related-grid{grid-template-columns:repeat(2,1fr);}}
   </style>
 </head>
 <body>
@@ -315,6 +324,29 @@
     </div>
   </div>
 </section>
+<section class="related-section">
+  <div class="related-head">You might also like</div>
+  <p class="related-sub">More custom branded merch — same no-minimum, free-mockup service.</p>
+  <div class="related-grid">
+      <a href="/pvc-keychains" class="related-card">
+        <img src="keychains.png" alt="Personalised PVC Keychains" loading="lazy">
+        <span>Personalised PVC Keychains</span>
+      </a>
+      <a href="/leather-keychains" class="related-card">
+        <img src="leather-keychain.png" alt="Leather Keychains" loading="lazy">
+        <span>Leather Keychains</span>
+      </a>
+      <a href="/metal-keychains" class="related-card">
+        <img src="metal-keychain.png" alt="Metal Keychains" loading="lazy">
+        <span>Metal Keychains</span>
+      </a>
+      <a href="/trolley-coin-keychains" class="related-card">
+        <img src="trolley-coin-keychain.png" alt="Trolley Coin Keychains" loading="lazy">
+        <span>Trolley Coin Keychains</span>
+      </a>
+  </div>
+</section>
+
 <section class="final-cta">
   <div style="max-width:600px;margin:0 auto;">
     <div style="font-size:3rem;margin-bottom:20px;">🔑</div>
