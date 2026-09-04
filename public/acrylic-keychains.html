@@ -441,6 +441,8 @@
       .process-steps { grid-template-columns: 1fr; }
       .hero-chips { gap: 8px; }
     }
+      .breadcrumb-back{display:flex;width:fit-content;align-items:center;gap:6px;font-size:.82rem;font-weight:600;color:var(--text-muted);text-decoration:none;margin-bottom:14px;transition:color .2s;}
+    .breadcrumb-back:hover{color:var(--accent);}
   </style>
 </head>
 <body>
@@ -459,6 +461,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-left">
+    <a href="/products" class="breadcrumb-back">← All Products</a>
     <div class="hero-badge">
       <span class="hero-badge-dot"></span>
       Personalised Acrylic Keychains · UK
