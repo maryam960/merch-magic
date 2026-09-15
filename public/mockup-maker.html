@@ -61,9 +61,12 @@
 
     /* ── STUDIO HERO ── */
     .studio-hero{padding:130px 40px 46px;text-align:center;position:relative;
-      background-color:var(--bg2);
-      background-image:radial-gradient(circle, rgba(30,15,58,.10) 1px, transparent 1px);
-      background-size:22px 22px;border-bottom:1px solid var(--border);}
+      background-color:var(--accent-pale);
+      background-image:
+        radial-gradient(circle, rgba(91,33,182,.14) 1px, transparent 1px),
+        linear-gradient(180deg, #ede9fe 0%, #f1ecff 45%, var(--bg) 100%);
+      background-size:22px 22px, 100% 100%;
+      border-bottom:1px solid var(--border);}
     .studio-crumb{font-size:.78rem;color:var(--text-muted);margin-bottom:22px;}
     .studio-crumb a{color:var(--text-muted);text-decoration:none;}
     .studio-crumb a:hover{color:var(--accent);}
