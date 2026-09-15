@@ -103,6 +103,21 @@
     .product-option:hover, .product-option.active{background:var(--accent-pale);color:var(--accent);}
     .product-empty{padding:20px 12px;text-align:center;font-size:.85rem;color:var(--text-muted);}
 
+    .brand-fetch{margin-top:14px;}
+    .brand-or{display:flex;align-items:center;gap:10px;margin:14px 0 12px;color:var(--text-muted);font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;}
+    .brand-or::before,.brand-or::after{content:'';flex:1;height:1px;background:var(--border);}
+    .brand-row{display:flex;gap:8px;}
+    .brand-row input{flex:1;min-width:0;padding:12px 14px;border:1px solid var(--border);border-radius:100px;font-family:'Inter',sans-serif;font-size:.85rem;color:var(--text);}
+    .brand-row input:focus{outline:none;border-color:var(--accent);}
+    .brand-row button{flex:0 0 auto;padding:12px 18px;border:none;border-radius:100px;background:var(--text);color:#fff;font-family:'Inter',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:opacity .2s;}
+    .brand-row button:disabled{opacity:.45;cursor:not-allowed;}
+    .brand-hint{margin-top:8px;font-size:.75rem;color:var(--text-muted);}
+    .brand-status{margin-top:10px;font-size:.8rem;display:none;align-items:center;gap:8px;}
+    .brand-status.show{display:flex;}
+    .brand-status.err{color:#b91c1c;}
+    .brand-status.ok{color:var(--text);}
+    .brand-status img{width:30px;height:30px;object-fit:contain;border:1px solid var(--border);border-radius:7px;background:#fff;}
+    .brand-spin{width:14px;height:14px;border:2px solid var(--accent-pale);border-top-color:var(--accent);border-radius:50%;animation:aiSpin .8s linear infinite;flex-shrink:0;}
     .upload-zone{border:2px dashed var(--border);border-radius:14px;padding:28px 16px;text-align:center;cursor:pointer;background:#fff;transition:border-color .2s,background .2s;}
     .upload-zone:hover, .upload-zone.dragover{border-color:var(--accent);background:var(--accent-pale);}
     .upload-zone input{display:none;}
@@ -258,6 +273,15 @@
           <div class="upload-icon">🖼️</div>
           <div class="upload-text"><strong>Click to upload</strong> or drag & drop<br>PNG, JPG or SVG — transparent PNG works best</div>
           <div class="upload-filename" id="uploadFilename"></div>
+        </div>
+        <div class="brand-fetch">
+          <div class="brand-or">or</div>
+          <div class="brand-row">
+            <input type="text" id="brandUrl" placeholder="yourcompany.co.uk" autocomplete="off" aria-label="Your website address">
+            <button type="button" id="brandFetchBtn">Find my logo</button>
+          </div>
+          <p class="brand-hint">Paste your website and we'll pull your logo from it.</p>
+          <div class="brand-status" id="brandStatus"></div>
         </div>
       </div>
 
@@ -610,6 +634,56 @@
   aiRefineInput.addEventListener("keydown", function (e) {
     if (e.key === "Enter") btnRefineAi.click();
   });
+
+  /* ── Find logo from a website ── */
+  (function () {
+    var input = document.getElementById("brandUrl");
+    var btn = document.getElementById("brandFetchBtn");
+    var status = document.getElementById("brandStatus");
+    if (!input || !btn) return;
+
+    function show(cls, html) {
+      status.className = "brand-status show " + cls;
+      status.innerHTML = html;
+    }
+
+    function run() {
+      var url = input.value.trim();
+      if (!url) { show("err", "Enter your website address first."); return; }
+
+      btn.disabled = true;
+      show("ok", '<span class="brand-spin"></span><span>Looking for your logo…</span>');
+
+      fetch("/api/fetch-brand", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: url })
+      })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+        .then(function (res) {
+          if (!res.ok || !res.j.image) {
+            show("err", (res.j.error || "We couldn't fetch that logo.").replace(/</g, "&lt;"));
+            return;
+          }
+          logoDataUrl = res.j.image;
+          uploadFilename.textContent = "Logo from " + (res.j.site || "your website");
+          var img = document.createElement("img");
+          img.src = res.j.image;
+          status.className = "brand-status show ok";
+          status.innerHTML = "";
+          status.appendChild(img);
+          var txt = document.createElement("span");
+          txt.textContent = "Found it — swap to upload if this isn't right.";
+          status.appendChild(txt);
+          updateActionState();
+        })
+        .catch(function () { show("err", "We couldn't reach that website."); })
+        .finally(function () { btn.disabled = false; });
+    }
+
+    btn.addEventListener("click", run);
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); run(); } });
+  })();
 
   updateActionState();
 })();
