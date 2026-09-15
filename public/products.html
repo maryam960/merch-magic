@@ -28,7 +28,7 @@
     }
 
     html { scroll-behavior: smooth; }
-    body {
+    body {padding-top:34px;
       font-family: 'Inter', sans-serif;
       background: var(--bg); color: var(--text);
       overflow-x: hidden;
@@ -38,7 +38,7 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 34px; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 20px 40px;
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -146,7 +146,7 @@
       padding: 28px 40px;
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      position: sticky; top: 72px; z-index: 50;
+      position: sticky; top: 106px; z-index: 50;
       background: rgba(248,248,246,0.95);
       backdrop-filter: blur(12px);
     }
@@ -365,7 +365,7 @@
     .nav-hamburger.open span:nth-child(2) { opacity: 0; }
     .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
     .mobile-menu {
-      display: none; position: fixed; top: 65px; left: 0; right: 0; z-index: 99;
+      display: none; position: fixed; top: 99px; left: 0; right: 0; z-index: 99;
       background: rgba(237,233,254,0.92); backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       padding: 20px 24px 28px; flex-direction: column; gap: 4px;
@@ -384,6 +384,15 @@
       background: var(--accent); border-radius: 100px; border-bottom: none;
     }
 
+    .promo-strip{position:fixed;top:0;left:0;right:0;z-index:300;height:34px;display:flex;align-items:center;justify-content:center;gap:18px;background:var(--text);color:#fff;font-size:.75rem;padding:0 14px;}
+    .promo-strip .promo-trust{display:flex;align-items:center;gap:7px;white-space:nowrap;}
+    .promo-strip .promo-stars{color:#ffc107;letter-spacing:1px;}
+    .promo-strip strong{font-weight:700;}
+    .promo-strip .promo-link{display:flex;align-items:center;gap:7px;color:#fff;text-decoration:none;white-space:nowrap;font-weight:600;}
+    .promo-strip .promo-link:hover{text-decoration:underline;}
+    .promo-strip .promo-new{background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.05em;padding:2px 7px;border-radius:100px;}
+    .promo-sep{opacity:.28;}
+    @media(max-width:760px){.promo-strip .promo-trust,.promo-sep{display:none;}}
     /* ── RESPONSIVE ── */
     @media (max-width: 1200px) {
       .products-grid { grid-template-columns: repeat(4, 1fr); }
@@ -393,7 +402,7 @@
       .nav-links { display: none; }
       .nav-hamburger { display: flex; }
       .page-header { padding: 120px 24px 60px; }
-      .filter-bar { padding: 20px 24px; top: 62px; }
+      .filter-bar { padding: 20px 24px; top: 96px; }
       .products-section { padding: 40px 24px 80px; }
       .products-grid { grid-template-columns: repeat(3, 1fr); }
       .products-grid.grid-4 { grid-template-columns: repeat(3, 1fr); }
@@ -414,6 +423,11 @@
 </head>
 <body>
 
+<div class="promo-strip">
+  <span class="promo-trust"><span class="promo-stars">★★★★★</span><span><strong>5-star rated</strong> on Etsy</span></span>
+  <span class="promo-sep">|</span>
+  <a class="promo-link" href="/mockup-maker"><span class="promo-new">NEW</span> See your logo on our merch with the AI Mockup Maker →</a>
+</div>
 <!-- NAV -->
 <nav>
   <a href="/" class="nav-logo">Merch<span>Magic</span></a>

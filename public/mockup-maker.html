@@ -14,9 +14,9 @@
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
     :root{--bg:#f8f8f6;--bg2:#f0f0ee;--text:#1e0f3a;--text-muted:rgba(30,15,58,0.45);--accent:#5b21b6;--accent-light:#a78bfa;--accent-pale:#ede9fe;--border:rgba(30,15,58,0.1);--green:#25D366;}
     html{scroll-behavior:smooth;}
-    body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+    body{padding-top:34px;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-    nav{position:fixed;top:30px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(237,233,254,0.85);border-bottom:1px solid var(--border);transition:padding .3s;}
+    nav{position:fixed;top:34px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(237,233,254,0.85);border-bottom:1px solid var(--border);transition:padding .3s;}
     .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.02em;color:var(--text);text-decoration:none;}
     .nav-logo span{color:var(--accent);}
     .nav-links{display:flex;gap:32px;list-style:none;}
@@ -41,7 +41,7 @@
     .nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
     .nav-hamburger.open span:nth-child(2){opacity:0;}
     .nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-    .mobile-menu{display:none;position:fixed;top:65px;left:0;right:0;z-index:99;background:rgba(237,233,254,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px 28px;flex-direction:column;gap:4px;}
+    .mobile-menu{display:none;position:fixed;top: 99px;left:0;right:0;z-index:99;background:rgba(237,233,254,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:20px 24px 28px;flex-direction:column;gap:4px;}
     .mobile-menu.open{display:flex;}
     .mobile-menu a{font-size:1rem;font-weight:500;color:var(--text);text-decoration:none;padding:12px 0;border-bottom:1px solid var(--border);transition:color .2s;}
     .mobile-menu a:last-child{border-bottom:none;}
@@ -51,7 +51,7 @@
 
 
     /* ── TRUST STRIP ── */
-    .trust-strip{position:fixed;top:0;left:0;right:0;z-index:210;height:30px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--text);color:#fff;font-size:.74rem;letter-spacing:.01em;padding:0 16px;}
+    .trust-strip{position:fixed;top:0;left:0;right:0;z-index:300;height:34px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--text);color:#fff;font-size:.74rem;letter-spacing:.01em;padding:0 16px;}
     .trust-strip strong{font-weight:700;}
     .trust-stars{color:#ffc107;letter-spacing:1px;}
     .trust-strip a{color:#fff;text-decoration:none;opacity:.75;}
@@ -60,7 +60,7 @@
     @media(max-width:600px){.trust-detail{display:none;}.trust-strip{font-size:.7rem;}}
 
     /* ── STUDIO HERO ── */
-    .studio-hero{padding:150px 40px 46px;text-align:center;position:relative;
+    .studio-hero{padding:130px 40px 46px;text-align:center;position:relative;
       background-color:var(--bg2);
       background-image:radial-gradient(circle, rgba(30,15,58,.10) 1px, transparent 1px);
       background-size:22px 22px;border-bottom:1px solid var(--border);}
@@ -181,11 +181,11 @@
     .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:32px;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted);flex-wrap:wrap;gap:12px;}
 
     @media(max-width:900px){
-      nav{padding:16px 24px;top:30px;}
+      nav{padding:16px 24px;top:34px;}
       .nav-links{display:none;}
       .nav-hamburger{display:flex;}
       .page-head{padding:120px 20px 16px;}
-      .studio-hero{padding:120px 20px 36px;}
+      .studio-hero{padding:104px 20px 36px;}
       main{padding:24px 20px 80px;}
       .maker-grid{grid-template-columns:1fr;gap:28px;}
       footer{padding:40px 24px 32px;}

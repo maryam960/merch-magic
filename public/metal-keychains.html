@@ -36,7 +36,7 @@
       --green-pale: #dcfce7;
     }
     html { scroll-behavior: smooth; }
-    body {
+    body {padding-top:34px;
       font-family: 'Inter', sans-serif;
       background: var(--bg); color: var(--text);
       overflow-x: hidden;
@@ -45,7 +45,7 @@
 
     /* ── STICKY TOP BAR ── */
     .top-bar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      position: fixed; top: 34px; left: 0; right: 0; z-index: 200;
       background: rgba(248,248,246,0.95);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
@@ -417,6 +417,15 @@
     }
     .lp-footer a:hover { color: var(--text); }
 
+    .promo-strip{position:fixed;top:0;left:0;right:0;z-index:300;height:34px;display:flex;align-items:center;justify-content:center;gap:18px;background:var(--text);color:#fff;font-size:.75rem;padding:0 14px;}
+    .promo-strip .promo-trust{display:flex;align-items:center;gap:7px;white-space:nowrap;}
+    .promo-strip .promo-stars{color:#ffc107;letter-spacing:1px;}
+    .promo-strip strong{font-weight:700;}
+    .promo-strip .promo-link{display:flex;align-items:center;gap:7px;color:#fff;text-decoration:none;white-space:nowrap;font-weight:600;}
+    .promo-strip .promo-link:hover{text-decoration:underline;}
+    .promo-strip .promo-new{background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff;font-size:.62rem;font-weight:800;letter-spacing:.05em;padding:2px 7px;border-radius:100px;}
+    .promo-sep{opacity:.28;}
+    @media(max-width:760px){.promo-strip .promo-trust,.promo-sep{display:none;}}
     /* ── RESPONSIVE ── */
     @media (max-width: 900px) {
       .top-bar { padding: 14px 20px; }
@@ -456,6 +465,11 @@
 </head>
 <body>
 
+<div class="promo-strip">
+  <span class="promo-trust"><span class="promo-stars">★★★★★</span><span><strong>5-star rated</strong> on Etsy</span></span>
+  <span class="promo-sep">|</span>
+  <a class="promo-link" href="/mockup-maker"><span class="promo-new">NEW</span> See your logo on our merch with the AI Mockup Maker →</a>
+</div>
 <!-- STICKY TOP BAR -->
 <div class="top-bar">
   <a href="/" class="top-bar-logo">Merch<span>Magic</span></a>
