@@ -16,7 +16,7 @@
     html{scroll-behavior:smooth;}
     body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
 
-    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(237,233,254,0.85);border-bottom:1px solid var(--border);transition:padding .3s;}
+    nav{position:fixed;top:30px;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:20px 40px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(237,233,254,0.85);border-bottom:1px solid var(--border);transition:padding .3s;}
     .nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:800;font-size:1.35rem;letter-spacing:-0.02em;color:var(--text);text-decoration:none;}
     .nav-logo span{color:var(--accent);}
     .nav-links{display:flex;gap:32px;list-style:none;}
@@ -49,6 +49,37 @@
     .mobile-menu .mobile-cta{margin-top:16px;display:inline-flex;align-items:center;justify-content:center;font-size:1rem;font-weight:600;color:var(--bg);text-decoration:none;padding:13px 24px;background:var(--accent);border-radius:100px;transition:opacity .2s;}
     .mobile-menu .mobile-cta:hover{opacity:.88;border-bottom:none;}
 
+
+    /* ── TRUST STRIP ── */
+    .trust-strip{position:fixed;top:0;left:0;right:0;z-index:210;height:30px;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--text);color:#fff;font-size:.74rem;letter-spacing:.01em;padding:0 16px;}
+    .trust-strip strong{font-weight:700;}
+    .trust-stars{color:#ffc107;letter-spacing:1px;}
+    .trust-strip a{color:#fff;text-decoration:none;opacity:.75;}
+    .trust-strip a:hover{opacity:1;text-decoration:underline;}
+    .trust-strip span{white-space:nowrap;}
+    @media(max-width:600px){.trust-detail{display:none;}.trust-strip{font-size:.7rem;}}
+
+    /* ── STUDIO HERO ── */
+    .studio-hero{padding:150px 40px 46px;text-align:center;position:relative;
+      background-color:var(--bg2);
+      background-image:radial-gradient(circle, rgba(30,15,58,.10) 1px, transparent 1px);
+      background-size:22px 22px;border-bottom:1px solid var(--border);}
+    .studio-crumb{font-size:.78rem;color:var(--text-muted);margin-bottom:22px;}
+    .studio-crumb a{color:var(--text-muted);text-decoration:none;}
+    .studio-crumb a:hover{color:var(--accent);}
+    .studio-new{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;color:var(--accent);margin-bottom:10px;}
+    .title-frame{position:relative;display:inline-block;padding:6px 14px;margin-bottom:18px;}
+    .title-frame h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5.5vw,3.6rem);font-weight:800;letter-spacing:-0.035em;line-height:1;margin:0;}
+    .title-frame::before{content:'';position:absolute;inset:0;border:1px solid var(--accent);}
+    .title-frame i{position:absolute;width:9px;height:9px;background:#fff;border:1.5px solid var(--accent);border-radius:1px;}
+    .title-frame i:nth-child(1){top:-5px;left:-5px;}
+    .title-frame i:nth-child(2){top:-5px;right:-5px;}
+    .title-frame i:nth-child(3){bottom:-5px;left:-5px;}
+    .title-frame i:nth-child(4){bottom:-5px;right:-5px;}
+    .studio-sub{font-size:1rem;color:var(--text-muted);line-height:1.6;max-width:540px;margin:0 auto 26px;}
+    .btn-start{display:inline-flex;align-items:center;gap:8px;background:var(--text);color:#fff;font-size:.95rem;font-weight:700;padding:14px 32px;border-radius:100px;text-decoration:none;transition:transform .2s,opacity .2s;}
+    .btn-start:hover{transform:translateY(-2px);opacity:.92;}
+    .free-note{margin-top:12px;font-size:.8rem;color:var(--text-muted);}
     .page-head{padding:140px 40px 20px;max-width:720px;margin:0 auto;text-align:center;}
     .page-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
     .page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:800;letter-spacing:-0.03em;margin-bottom:14px;}
@@ -135,10 +166,11 @@
     .footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:32px;border-top:1px solid var(--border);font-size:.8rem;color:var(--text-muted);flex-wrap:wrap;gap:12px;}
 
     @media(max-width:900px){
-      nav{padding:16px 24px;}
+      nav{padding:16px 24px;top:30px;}
       .nav-links{display:none;}
       .nav-hamburger{display:flex;}
       .page-head{padding:120px 20px 16px;}
+      .studio-hero{padding:120px 20px 36px;}
       main{padding:24px 20px 80px;}
       .maker-grid{grid-template-columns:1fr;gap:28px;}
       footer{padding:40px 24px 32px;}
@@ -153,6 +185,11 @@
   </style>
 </head>
 <body>
+
+<div class="trust-strip">
+  <span class="trust-stars">★★★★★</span>
+  <span><strong>5-star rated</strong> on Etsy<span class="trust-detail"> · 3+ years · hundreds of verified UK reviews</span></span>
+</div>
 
 <nav>
   <a href="/" class="nav-logo">Merch<span>Magic</span></a>
@@ -191,14 +228,20 @@
   <a href="https://wa.me/447892734800?text=Hi%2C%20I%27ve%20made%20a%20mockup%20with%20your%20Mockup%20Maker%20and%20I%27d%20like%20a%20quote" target="_blank" class="mobile-cta">💬 Get a Free Quote</a>
 </div>
 
-<div class="page-head">
-  <div class="page-label">Design Studio</div>
-  <h1 class="page-title">See your logo<br><em>on our merch.</em></h1>
-  <p class="page-sub">Pick a product, upload your logo, and let AI generate a photorealistic mockup. Download it and send it straight to us for a free quote.</p>
-</div>
+<section class="studio-hero">
+  <div class="studio-crumb"><a href="/">Home</a> / <a href="/products">Products</a> / Mockup Maker</div>
+  <div class="studio-new">✦ NEW</div>
+  <div class="title-frame">
+    <i></i><i></i><i></i><i></i>
+    <h1>AI Mockup Maker</h1>
+  </div>
+  <p class="studio-sub">See your logo on our merch before you order. Pick a product, add your logo, and AI generates a photorealistic mockup in seconds.</p>
+  <a href="#maker" class="btn-start">Start designing →</a>
+  <p class="free-note">Free to use. No sign-up, no obligation.</p>
+</section>
 
 <main>
-  <div class="maker-grid">
+  <div class="maker-grid" id="maker">
     <div class="controls">
       <div class="step">
         <div class="step-label"><span class="step-num">1</span> Choose a product</div>
