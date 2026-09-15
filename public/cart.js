@@ -123,6 +123,20 @@
       ".mm-btn-checkout{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:" + GREEN + ";color:#fff;border:none;border-radius:100px;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;box-shadow:0 4px 14px rgba(37,211,102,0.35);}",
       ".mm-btn-viewcart{display:block;text-align:center;width:100%;padding:10px;margin-top:8px;background:none;border:none;color:" + PURPLE + ";font-weight:600;font-size:.82rem;cursor:pointer;text-decoration:underline;}",
       ".mm-atc-widget{display:flex;align-items:center;gap:12px;margin:16px 0;flex-wrap:wrap;}",
+      ".mm-cfg{margin:18px 0 6px;max-width:480px;}",
+      ".mm-cfg-row{display:flex;gap:16px;padding:14px 0;border-top:1px solid rgba(30,15,58,0.10);}",
+      ".mm-cfg-row:last-of-type{border-bottom:1px solid rgba(30,15,58,0.10);}",
+      ".mm-cfg-lbl{flex:0 0 96px;font-size:.8rem;font-weight:700;color:" + PURPLE_DARK + ";}",
+      ".mm-cfg-lbl small{display:block;font-weight:500;opacity:.55;margin-top:2px;}",
+      ".mm-cfg-opts{display:flex;flex-wrap:wrap;gap:8px;flex:1;}",
+      ".mm-tier{min-width:46px;padding:9px 12px;border:1px solid rgba(30,15,58,0.15);border-radius:10px;background:#fff;cursor:pointer;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:700;color:" + PURPLE_DARK + ";}",
+      ".mm-tier:hover{border-color:" + PURPLE + ";}",
+      ".mm-tier.on{border-color:" + PURPLE_DARK + ";box-shadow:inset 0 0 0 1px " + PURPLE_DARK + ";}",
+      ".mm-cfg-note{font-size:.78rem;color:rgba(30,15,58,0.5);padding:12px 0 0;}",
+      ".mm-price{padding:16px 0 4px;}",
+      ".mm-price-total{font-family:'Space Grotesk',sans-serif;font-size:1.9rem;font-weight:800;letter-spacing:-.02em;color:" + PURPLE_DARK + ";line-height:1;}",
+      ".mm-price-unit{font-size:.8rem;color:rgba(30,15,58,0.5);margin-top:6px;}",
+      ".mm-price-vat{font-size:.72rem;color:rgba(30,15,58,0.38);margin-top:2px;}",
       ".mm-atc-qty{display:flex;align-items:center;gap:0;border:1px solid rgba(30,15,58,0.15);border-radius:100px;overflow:hidden;background:#fff;}",
       ".mm-atc-qty button{width:36px;height:40px;border:none;background:#fff;cursor:pointer;font-size:1.1rem;color:" + PURPLE_DARK + ";}",
       ".mm-atc-qty button:hover{background:#f0f0ee;}",
@@ -297,12 +311,131 @@
     });
   }
 
+  /* ── Quantity + live price configurator (only when pricing data exists) ── */
+  function pricingFor(id) {
+    var all = window.MM_PRICING;
+    if (!all || !all[id]) return null;
+    var cfg = all[id];
+    if (!cfg.tiers || !cfg.tiers.length) return null;
+    var tiers = cfg.tiers.slice().sort(function (a, b) { return a.qty - b.qty; });
+    return {
+      tiers: tiers,
+      minQty: cfg.minQty || 1,
+      leadDays: cfg.leadDays || [5, 7]
+    };
+  }
+
+  function unitAt(pricing, qty) {
+    var unit = pricing.tiers[0].unit;
+    for (var i = 0; i < pricing.tiers.length; i++) {
+      if (qty >= pricing.tiers[i].qty) unit = pricing.tiers[i].unit;
+    }
+    return unit;
+  }
+
+  function money(n) {
+    return "£" + n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  /** Working-day delivery window, skipping weekends. */
+  function deliveryWindow(leadDays) {
+    function addWorkdays(days) {
+      var d = new Date();
+      while (days > 0) {
+        d.setDate(d.getDate() + 1);
+        if (d.getDay() !== 0 && d.getDay() !== 6) days--;
+      }
+      return d;
+    }
+    var opts = { day: "numeric", month: "short" };
+    var a = addWorkdays(leadDays[0]).toLocaleDateString("en-GB", opts);
+    var b = addWorkdays(leadDays[1]).toLocaleDateString("en-GB", opts);
+    return a + " – " + b;
+  }
+
+  function buildConfigurator(pricing, onQtyChange) {
+    var presets = pricing.tiers.map(function (t) { return t.qty; });
+    var qty = presets[0];
+
+    var wrap = document.createElement("div");
+    wrap.className = "mm-cfg";
+    wrap.innerHTML =
+      '<div class="mm-cfg-row">' +
+        '<div class="mm-cfg-lbl">Quantity<small class="mm-cfg-qty"></small></div>' +
+        '<div class="mm-cfg-opts"></div>' +
+      "</div>" +
+      '<div class="mm-cfg-row">' +
+        '<div class="mm-cfg-lbl">Delivery<small>' + (pricing.minQty > 1 ? pricing.minQty + " min" : "No minimum") + "</small></div>" +
+        '<div class="mm-cfg-opts"><span class="mm-cfg-note" style="padding:0;">Arrives ' +
+          deliveryWindow(pricing.leadDays) + " · " + pricing.leadDays[0] + "–" + pricing.leadDays[1] +
+        " working days</span></div>" +
+      "</div>" +
+      '<div class="mm-price">' +
+        '<div class="mm-price-total"></div>' +
+        '<div class="mm-price-unit"></div>' +
+        '<div class="mm-price-vat">Excludes VAT · free digital mockup before production</div>' +
+      "</div>";
+
+    var opts = wrap.querySelector(".mm-cfg-opts");
+    var qtyLbl = wrap.querySelector(".mm-cfg-qty");
+    var totalEl = wrap.querySelector(".mm-price-total");
+    var unitEl = wrap.querySelector(".mm-price-unit");
+
+    function paint() {
+      var unit = unitAt(pricing, qty);
+      totalEl.textContent = money(unit * qty);
+      unitEl.textContent = money(unit) + "/pc · " + qty + " pcs";
+      qtyLbl.textContent = qty + " pcs";
+      Array.prototype.forEach.call(opts.querySelectorAll(".mm-tier"), function (b) {
+        b.classList.toggle("on", parseInt(b.dataset.qty, 10) === qty);
+      });
+      if (onQtyChange) onQtyChange(qty);
+    }
+
+    presets.forEach(function (n) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "mm-tier";
+      b.dataset.qty = n;
+      b.textContent = n;
+      b.addEventListener("click", function () { qty = n; paint(); });
+      opts.appendChild(b);
+    });
+
+    var custom = document.createElement("button");
+    custom.type = "button";
+    custom.className = "mm-tier";
+    custom.textContent = "＋";
+    custom.title = "Another quantity";
+    custom.addEventListener("click", function () {
+      var v = prompt("How many would you like?", String(qty));
+      if (v === null) return;
+      var n = parseInt(v, 10);
+      if (!isNaN(n) && n >= pricing.minQty) { qty = n; paint(); }
+    });
+    opts.appendChild(custom);
+
+    paint();
+    return { el: wrap, getQty: function () { return qty; } };
+  }
+
   /* ── Add-to-cart widget: single product landing pages ── */
   function injectSingleProductWidget() {
     var product = window.__PRODUCT__;
     if (!product || !product.id) return;
     var mount = document.querySelector(".hero-chips");
     if (!mount) return;
+
+    // When this product has pricing, show the tier + live price configurator
+    // above the add-to-cart row. Otherwise the page is unchanged.
+    var pricing = pricingFor(product.id);
+    var cfg = null;
+    if (pricing) {
+      cfg = buildConfigurator(pricing);
+      mount.parentNode.insertBefore(cfg.el, mount.nextSibling);
+      mount = cfg.el;
+    }
+
     var widget = document.createElement("div");
     widget.className = "mm-atc-widget";
     widget.innerHTML =
@@ -312,10 +445,12 @@
       '<button type="button" data-action="inc">+</button>' +
       "</div>" +
       '<button type="button" class="mm-btn-atc">🛒 Add to Cart</button>';
+    if (cfg) widget.querySelector(".mm-atc-qty").style.display = "none";
     mount.parentNode.insertBefore(widget, mount.nextSibling);
 
     var qtyInput = widget.querySelector(".mm-qty-input");
     function currentQty() {
+      if (cfg) return cfg.getQty();
       var val = parseInt(qtyInput.value, 10);
       return isNaN(val) || val < 1 ? 1 : val;
     }
